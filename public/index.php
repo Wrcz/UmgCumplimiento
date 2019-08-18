@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html >
+<h1>APP Cumplimiento</h1>
+</html>
+
 <?php
 
 /**
@@ -6,6 +11,9 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
+
+
+
 
 define('LARAVEL_START', microtime(true));
 
