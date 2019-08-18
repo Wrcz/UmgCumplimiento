@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Route::view('Prueba','Prueba',['numero'=>777]);
+
+Route::get('Prueba/{nombre?}', function ($nombre = null) {
+
+  $Alumnos = ['william','Michael','Jose'];
+
+  //return view('Prueba',['Alumnos'=>$Alumnos,'nombre'=>$nombre]);
+  return view('Prueba',compact('Alumnos','nombre'));
+})->name('Prueba');

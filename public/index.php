@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html >
-<h1>APP Cumplimiento</h1>
-</html>
-
 <?php
 
 /**
