@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<h1>hola</h1>
+</html>
+
 <?php
 
 /**
@@ -8,7 +13,7 @@
  */
 
 define('LARAVEL_START', microtime(true));
-<h1>APP CUMPLIMIENTO</h1>
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
