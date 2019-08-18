@@ -11,16 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', 'PageControler@inicio');
 //Route::view('Prueba','Prueba',['numero'=>777]);
+Route::get('Prueba/{nombre?}','PageControler@Prueba')->name('Prueba');
 
-Route::get('Prueba/{nombre?}', function ($nombre = null) {
+//Auth::routes();
 
-  $Alumnos = ['william','Michael','Jose'];
+//Auth::routes(['register' => false]);
 
-  //return view('Prueba',['Alumnos'=>$Alumnos,'nombre'=>$nombre]);
-  return view('Prueba',compact('Alumnos','nombre'));
-})->name('Prueba');
+Route::get('/home', 'HomeController@index')->name('home');
