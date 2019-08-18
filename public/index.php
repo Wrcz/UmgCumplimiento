@@ -8,7 +8,7 @@
  */
 
 define('LARAVEL_START', microtime(true));
-
+<h1>APP CUMPLIMIENTO</h1>
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
