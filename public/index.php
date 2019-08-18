@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<h1>hola</h1>
-</html>
-
 <?php
 
 /**
