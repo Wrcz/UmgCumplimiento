@@ -4,18 +4,31 @@
 
 <h1>Estos son los alumnos </h1>
 
-@foreach($Alumnos as $item)
-  <a href="{{Route('Prueba',$item)}}">{{$item}}</a> </br>
-@endforeach
+</br>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Password</th>
+    </tr>
+  </thead>
+  <tbody>
 
-@if(!empty($nombre))
+      @foreach ($Alumnos as $item)
+          <tr>
+        <th scope="row">{{$item->id}}</th>
+        <td>{{$item->NombreUsuario}}</td>
+        <td>{{$item->Correoelectronico}}</td>
+        <td>{{$item->Password}}</td>
+        </tr>
+      @endforeach
 
-  @switch ($nombre)
-    @case ($nombre=='william')
-      <h2>el nombre es {{$nombre}} </h2>
-      @break
-  @endswitch
 
-@endif
+
+
+  </tbody>
+</table>
 
 @endsection
