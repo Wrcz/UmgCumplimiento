@@ -17,4 +17,21 @@ class PageControler extends Controller
       return view('Prueba',compact('Alumnos'));
         }
 
+      public function detalle($id){
+          $Alumno = App\Usuario::findOrFail($id);
+          return view('Usuario.detalle',compact('Alumno'));
+        }
+
+        public function crear(Request $request){
+            $Alumno = new App\Usuario;
+            $Alumno->NombreUsuario=$request->NombreUsuario;
+            $Alumno->Password=$request->Password;
+            $Alumno->NivelUsuario=$request->NivelUsuario;
+            $Alumno->save();
+
+
+            return back()->with('mensaje', 'Usuario Agregado!');
+          //  return $request->all();
+          }
+
 }

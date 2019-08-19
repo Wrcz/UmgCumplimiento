@@ -13,10 +13,13 @@
 
 Route::get('/', 'PageControler@inicio');
 //Route::view('Prueba','Prueba',['numero'=>777]);
-Route::get('Prueba/{nombre?}','PageControler@Prueba')->name('Prueba');
+Route::get('/Prueba/{nombre?}','PageControler@Prueba')->name('Prueba');
 
+Route::get('/detalle/{id}','PageControler@detalle')->name('Usuario.detalle');
+
+Route::post('/crear/','PageControler@crear')->name('Usuario.crear');
 //Auth::routes();
 
 //Auth::routes(['register' => false]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
