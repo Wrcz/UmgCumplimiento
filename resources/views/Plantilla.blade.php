@@ -31,25 +31,22 @@
 </script>
 <link rel="stylesheet" crossorigin="anonymous" href="http://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css"/>
 </head>
-  <body class="hold-transition skin-blue layout-boxed sidebar-mini">
+  <body class="hold-transition skin-blue fixed sidebar-mini">
     <div class="wrapper">
+
 
   <!-- header -->
   @include('Themes/lte/header')
     <!-- aside -->
   @include('Themes/lte/aside')
-    <!-- Default box -->
-      <div class="content">
-        <!-- Default box -->
-        <div class="callout callout-info">
-       <h4>Tip!</h4>
 
-       <p>Add the layout-boxed class to the body tag to get this layout. The boxed layout is helpful when working on
-         large screens because it prevents the site from stretching very wide.</p>
-     </div>
-       <div class="box">
+
+    <div class="content-wrapper">
+      <div class="content">
+     
+       <div class="navbar navbar-static-top">
          <div class="box-header with-border">
-           <h3 class="box-title">Title</h3>
+           <h3 class="box-title">Titulo Contenido</h3>
 
            <div class="box-tools pull-right">
              <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -59,9 +56,7 @@
            </div>
          </div>
          <div class="box-body">
-           Start creating your amazing application!
-
-
+          Poner aca el contenido
 
                  @yield('seccion')
 
@@ -69,7 +64,9 @@
          <!-- /.box-body -->
 
        </div>
-    </div>
+    </div> 
+     <!-- content -->
+    </div> 
     </div>
 
    <!-- /.footer-body -->
