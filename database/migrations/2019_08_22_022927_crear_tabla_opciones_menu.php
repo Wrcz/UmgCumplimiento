@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsuariosTable extends Migration
+class CrearTablaOpcionesMenu extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateUsuariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuarios', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('NombreUsuario');
-            $table->string('Correoelectronico')->nullable();
-            $table->string('Password');
-            $table->string('NivelUsuario');
+        Schema::create('opciones_menu', function (Blueprint $table) {
+            $table->increments('idopcionmenu');
+            $table->string('nombremenu');
+            $table->integer('idopcionmenupadre');
+            $table->string('nombrevista');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateUsuariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('opciones_menu');
     }
 }
