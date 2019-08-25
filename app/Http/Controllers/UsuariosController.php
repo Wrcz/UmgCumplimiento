@@ -6,20 +6,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App;
 
-class EmpresasController extends Controller
+class UsuariosController extends Controller
 {
+    //Metodo de inicio
     public function inicio()
     {
-        return view('Empresas.empresas');
+        return view('Usuarios.usuarios');
     }
 
     //Metodo para obtener empresaas
-    public function empresas()
+    public function usuarios()
     {
         try {
-            $Empresas =App\empresas::all()->sortBy('nombreempresa');
+            $Usuarios =Db::table('usuarios')
+            ->join('usuarios_nivel', 'usuarios.idnivelusuario', '=', 'usuarios_nivel.idnivelusuario')
+            ->select('usuarios.idusuario', 'usuarios_nivel.nombrenivelusuario', 'usuarios.nombreusuario', 'usuarios.correoelectronico', 'usuarios.estadousuario')
+            ->get();
 
-            return view('Empresas.empresas', compact('Empresas'));
+            $Niveles =Db::table('usuarios_nivel')->orderby('idnivelusuario')->get();
+
+            return view('Usuarios.usuarios', compact('Usuarios', 'Niveles'));
         } catch (\Illuminate\Database\QueryException $e) {
             report($e);
             return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
@@ -33,38 +39,38 @@ class EmpresasController extends Controller
     {
         try {
             $request->validate([
-        'nombreempresa'=>'required',
-        'tipoindustria'=>'required',
+        'nivelusuario'=>'required',
+        'nombreusuario'=>'required',
         'correoelectronico'=>'required',
-        'pais'=>'required',
-        'direccion'=>'required'
+        'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+        'password_confirmation' => 'min:6'
         ]);
 
-            $Empresa = new App\empresas;
-            $Empresa->nombreempresa=$request->nombreempresa;
-            $Empresa->tipoindustria=$request->tipoindustria;
-            $Empresa->correoelectronico=$request->correoelectronico;
-            $Empresa->pais=$request->pais;
-            $Empresa->direccion=$request->direccion;
-            $Empresa->estadoempresa=true;
-            $Empresa->save();
-
-            return back()->with('mensaje', 'Empresa Agregada correctamente!');
+    
+            $Usuario = new App\usuarios;
+            $Usuario->idnivelusuario=$request->nivelusuario;
+            $Usuario->nombreusuario=$request->nombreusuario;
+            $Usuario->correoelectronico=$request->correoelectronico;
+            $Usuario->password=bcrypt($request->password);
+            $Usuario->estadousuario=true;
+            $Usuario->save();
+      
+            return back()->with('mensaje', 'Usuario Agregado correctamente!');
         } catch (\Illuminate\Database\QueryException $e) {
-            return back()->with('mensajeerror', 'Ocurrio un error agregar la empresa.');
+            return back()->with('mensajeerror', 'Ocurrio un error agregar usuario.');
         } catch (PDOException $e) {
-            return back()->with('mensajeerror', 'Ocurrio un error agregar la empresa.');
+            return back()->with('mensajeerror', 'Ocurrio un error agregar usuario.');
         } catch (Exception $e) {
-            return back()->with('mensajeerror', 'Ocurrio un error agregar la empresa.');
+            return back()->with('mensajeerror', 'Ocurrio un error agregar usuario.');
         }
     }
 
     //Metodo para Eliminar empresas
-    public function eliminar($idempresa)
+    public function eliminar($idusuario)
     {
         try {
-            $Empresa = App\empresas::where('idempresa', $idempresa)->delete();
-            return back()->with('mensaje', 'Empresa Eliminada.');
+            $Usuario = App\usuarios::where('idusuario', $idusuario)->delete();
+            return back()->with('mensaje', 'Usuario Eliminada.');
         } catch (\Illuminate\Database\QueryException $e) {
             report($e);
             return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
@@ -74,14 +80,14 @@ class EmpresasController extends Controller
     }
 
     //Metodo para Consultar Empresas
-    public function consultar($id, $regula)
+    public function consultar($id)
     {
         try {
-            $Empresa = App\empresas::findOrFail($id);
-            $Regulaciones = DB::select('SELECT r.idregulacion,r.identificacion,r.nombreregulacion,r.pais,r.estadoregulacion,isnull(re.estadoregulacionempresa,0)  asignada,ISNULL(re.idregulacionempresa,0)  idregulacionempresa FROM regulacion r left JOIN regulacion_empresa re ON r.idregulacion=re.idregulacion AND re.idempresa=?', [$id]);
-        
+            $Usuario = App\usuarios::findOrFail($id);
+            $Empresas = DB::select('SELECT e.idempresa,e.nombreempresa,e.estadoempresa, CASE WHEN  ue.idusuario IS NULL THEN 0 ELSE 1 END asignada FROM empresas e LEFT JOIN usuarios_empresas ue  ON e.idempresa=ue.idempresa AND ue.idusuario=?', [$id]);
+            $Niveles =Db::table('usuarios_nivel')->orderby('idnivelusuario')->get();
           
-            return view('Empresas.consultar', compact('Empresa'), compact('Regulaciones'));
+            return view('Usuarios.consultar', compact('Usuario','Empresas','Niveles'));
         } catch (\Illuminate\Database\QueryException $e) {
             report($e);
             return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
@@ -94,37 +100,30 @@ class EmpresasController extends Controller
     public function actualizar(Request $request, $id)
     {
         try {
+           
             $request->validate([
-          'nombreempresa'=>'required',
-          'tipoindustria'=>'required',
+          'nombreusuario'=>'required',
+          'nivelusuario'=>'required',
           'correoelectronico'=>'required',
-          'pais'=>'required',
-          'direccion'=>'required',
-          'estadoempresa'=>'required',
+          'estadousuario'=>'required',
+          'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+          'password_confirmation' => 'min:6'
           ]);
 
-            $Chk_estadoempresa =false;
-
-            if ($request->estadoempresa=="Activa") {
-                $Chk_estadoempresa=true;
-            } else {
-                $Chk_estadoempresa=false;
-            }
-
-            $Empresa = App\empresas::findOrFail($id);
-            $Empresa->nombreempresa=$request->nombreempresa;
-            $Empresa->tipoindustria=$request->tipoindustria;
-            $Empresa->correoelectronico=$request->correoelectronico;
-            $Empresa->pais=$request->pais;
-            $Empresa->direccion=$request->direccion;
-            $Empresa->estadoempresa=$Chk_estadoempresa;
-            $Empresa->save();
+            
+            $Usuario = App\usuarios::findOrFail($id);
+            $Usuario->nombreusuario=$request->nombreusuario;
+            $Usuario->idnivelusuario=$request->nivelusuario;
+            $Usuario->correoelectronico=$request->correoelectronico;
+            $Usuario->password=bcrypt($request->password);
+            $Usuario->estadousuario=$request->estadousuario;
+            $Usuario->save();
 
         
-            return back()->with('mensaje', 'Empresa actualizada.');
+            return back()->with('mensaje', 'Usuario actualizado.');
         } catch (\Illuminate\Database\QueryException $e) {
             report($e);
-            return back()->with('mensajeerror', 'Ocurrio un error al guardar los cambios.');
+            return back()->with('mensajeerror', 'Ocurrio un error al guardar los cambios.'. $e);
         } catch (PDOException $e) {
             return back()->with('mensajeerror', 'currio un error al guardar los cambios.');
         }

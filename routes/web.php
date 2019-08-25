@@ -14,36 +14,47 @@
 //Route::get('/', 'PageControler@inicio');
 
 Route::get('/', function () {
-         return view('bienvenido');
-    
+    return view('bienvenido');
 })->name('bienvenido');
 
 
 //Rutas para Empresas
 Route::get('/empresas', 'EmpresasController@empresas')->name('Empresas.empresas');
 
-Route::delete('/empresas/eliminar/{id}','EmpresasController@eliminar')->name('Empresas.eliminar');
+Route::delete('/empresas/eliminar/{id}', 'EmpresasController@eliminar')->name('Empresas.eliminar');
 
-Route::post('/empresas/agregar/','EmpresasController@agregar')->name('Empresas.agregar');
+Route::post('/empresas/agregar/', 'EmpresasController@agregar')->name('Empresas.agregar');
 
-Route::get('/empresas/consultar/{id}/{regulaciones}','EmpresasController@consultar')->name('Empresas.consultar');
+Route::get('/empresas/consultar/{id}/{regulaciones}', 'EmpresasController@consultar')->name('Empresas.consultar');
 
-Route::put('/empresas/consultar/{id}','EmpresasController@actualizar')->name('Empresas.actualizar');
+Route::put('/empresas/consultar/{id}', 'EmpresasController@actualizar')->name('Empresas.actualizar');
 
-Route::put('/empresas/regulacion/{id}/{reg}','EmpresasController@actualizarregulacion')->name('Empresas.actualizarregulacion');
+Route::put('/empresas/regulacion/{id}/{reg}', 'EmpresasController@actualizarregulacion')->name('Empresas.actualizarregulacion');
 //fin Rutas para Empresas
 
-Route::get('/Prueba/{nombre?}','PageControler@Prueba')->name('Prueba');
+//Rutas para usuarios
+Route::get('/usuarios', 'UsuariosController@usuarios')->name('Usuarios.usuarios');
 
-Route::get('/detalle/{id}','PageControler@detalle')->name('Usuario.detalle');
+Route::post('/usuarios/agregar/', 'UsuariosController@agregar')->name('Usuarios.agregar');
 
-Route::get('/editar/{id}','PageControler@editar')->name('Usuario.editar');
+Route::delete('/usuarios/eliminar/{id}', 'UsuariosController@eliminar')->name('Usuarios.eliminar');
 
-Route::put('/editar/{id}','PageControler@update')->name('Usuario.update');
+Route::get('/usuarios/consultar/{id}', 'UsuariosController@consultar')->name('Usuarios.consultar');
 
-Route::DELETE('/eliminar/{id}','PageControler@eliminar')->name('Usuario.eliminar');
+Route::put('/usuarios/consultar/{id}', 'UsuariosController@actualizar')->name('Usuarios.actualizar');
+//fin Rutas para usuarios
 
-Route::post('/crear/','PageControler@crear')->name('Usuario.crear');
+Route::get('/Prueba/{nombre?}', 'PageControler@Prueba')->name('Prueba');
+
+Route::get('/detalle/{id}', 'PageControler@detalle')->name('Usuario.detalle');
+
+Route::get('/editar/{id}', 'PageControler@editar')->name('Usuario.editar');
+
+Route::put('/editar/{id}', 'PageControler@update')->name('Usuario.update');
+
+Route::DELETE('/eliminar/{id}', 'PageControler@eliminar')->name('Usuario.eliminar');
+
+Route::post('/crear/', 'PageControler@crear')->name('Usuario.crear');
 
 //Auth::routes();
 

@@ -35,7 +35,7 @@
            </span>
          </a>
          <ul class="treeview-menu">
-           <li><a href="#"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+           <li><a href="{{route('Usuarios.usuarios')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
            <li><a href="{{route('Empresas.empresas')}}"><i class="fa fa-circle-o"></i> Empresas</a></li>
          </ul>
        </li>
