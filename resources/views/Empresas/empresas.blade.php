@@ -3,8 +3,6 @@
 
 @section('seccion')
   
-
-
   @section('titulo')
   <section class="content-header">
         <h1> Gestión de Empresas 
@@ -45,58 +43,15 @@
 
 
             <div class="row">
-            <div class="col-xs-12">
-                    <div class="box">
-                            <div class="box-header">
-                                    <h3 class="box-title">Listado de Empresas</h3>
-                            </div>
-                       <div class="box-body">
-                            <table id="empresas" class="table table-striped table-bordered">
-                                    <thead>
-                                    <tr>
-                                      <th>Id</th>
-                                      <th>Nombre Empresa</th>
-                                      <th>Industria</th>
-                                      <th>Dirección</th>
-                                      <th>Correo Electrónico</th>
-                                      <th>País</th>
-                                      <th>Estado</th>
-                                      <th></th>
-                                      <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                 @foreach ($Empresas as $empresa)
-                                    <tr>
-                                      <td>{{$empresa->idempresa}}</td>
-                                      <td>{{$empresa->nombreempresa}}</td>
-                                      <td>{{$empresa->tipoindustria}}</td>
-                                      <td>{{$empresa->direccion}}</td>
-                                      <td>{{$empresa->correoelectronico}}</td>
-                                      <td>{{$empresa->pais}}</td>
-                                      <td>
-                                        @if ($empresa->estadoempresa==0)
-                                        <span class="label label-danger">Inactiva</span>
-                                        @else
-                                          <span class="label label-success">Activa</span>
-                                        @endif
-                                      </td>
-                                          <td>
-                                            <a href="{{route('Empresas.consultar',$empresa->idempresa)}}"  class="btn btn-warning btn-xs">Editar</a>
-                                          </td>
-                                          <td>
-                                            <form action="{{route('Empresas.eliminar',$empresa->idempresa)}}"  method="POST" class="d-inline">
-                                              @method('DELETE')  
-                                              @csrf
-                                                <button class="btn btn-danger btn-xs" type="submit">Eliminar</button>
-                                               
-                                            </form>
-                                          </td>
-                                    </tr>
-                                    @endforeach
-                                  </tbody>
-                                    <tfoot>
-                                    <tr>
+              <div class="col-xs-12">
+                      <div class="box">
+                              <div class="box-header">
+                                      <h3 class="box-title">Listado de Empresas</h3>
+                              </div>
+                        <div class="box-body">
+                              <table id="empresas" class="table table-striped table-bordered">
+                                      <thead>
+                                      <tr>
                                         <th>Id</th>
                                         <th>Nombre Empresa</th>
                                         <th>Industria</th>
@@ -106,14 +61,56 @@
                                         <th>Estado</th>
                                         <th></th>
                                         <th></th>
-                                    </tr>
-                                    </tfoot>
-                                  </table>
-                        </div>
-                    </div>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                  @foreach ($Empresas as $empresa)
+                                      <tr>
+                                        <td>{{$empresa->idempresa}}</td>
+                                        <td>{{$empresa->nombreempresa}}</td>
+                                        <td>{{$empresa->tipoindustria}}</td>
+                                        <td>{{$empresa->direccion}}</td>
+                                        <td>{{$empresa->correoelectronico}}</td>
+                                        <td>{{$empresa->pais}}</td>
+                                        <td>
+                                          @if ($empresa->estadoempresa==0)
+                                          <span class="label label-danger">Inactiva</span>
+                                          @else
+                                            <span class="label label-success">Activa</span>
+                                          @endif
+                                        </td>
+                                            <td>
+                                              <a href="{{route('Empresas.consultar',['id'=> $empresa->idempresa,'regula'=>0])}}"  class="btn btn-warning btn-xs">Editar</a>
+                                            </td>
+                                            <td>
+                                              <form action="{{route('Empresas.eliminar',$empresa->idempresa)}}"  method="POST" class="d-inline">
+                                                @method('DELETE')  
+                                                @csrf
+                                                  <button class="btn btn-danger btn-xs" type="submit">Eliminar</button>
+                                                
+                                              </form>
+                                            </td>
+                                      </tr>
+                                      @endforeach
+                                    </tbody>
+                                      <tfoot>
+                                      <tr>
+                                          <th>Id</th>
+                                          <th>Nombre Empresa</th>
+                                          <th>Industria</th>
+                                          <th>Dirección</th>
+                                          <th>Correo Electrónico</th>
+                                          <th>País</th>
+                                          <th>Estado</th>
+                                          <th></th>
+                                          <th></th>
+                                      </tr>
+                                      </tfoot>
+                                    </table>
+                          </div>
+                      </div>
+              </div>
             </div>
-
-        </div>
 
         <!-- Alertas de Mensaje -->
         @error('nombreempresa')

@@ -26,9 +26,11 @@ Route::delete('/empresas/eliminar/{id}','EmpresasController@eliminar')->name('Em
 
 Route::post('/empresas/agregar/','EmpresasController@agregar')->name('Empresas.agregar');
 
-Route::get('/empresas/consultar/{id}','EmpresasController@consultar')->name('Empresas.consultar');
+Route::get('/empresas/consultar/{id}/{regulaciones}','EmpresasController@consultar')->name('Empresas.consultar');
 
 Route::put('/empresas/consultar/{id}','EmpresasController@actualizar')->name('Empresas.actualizar');
+
+Route::put('/empresas/regulacion/{id}/{reg}','EmpresasController@actualizarregulacion')->name('Empresas.actualizarregulacion');
 //fin Rutas para Empresas
 
 Route::get('/Prueba/{nombre?}','PageControler@Prueba')->name('Prueba');

@@ -17,6 +17,7 @@ class CrearTablaRegulacionEmpresa extends Migration
            $table->increments('idregulacionempresa');
             $table->integer('idempresa');
             $table->integer('idregulacion');
+            $table->boolean('estadoregulacionempresa');
             $table->timestamps();
 
 
