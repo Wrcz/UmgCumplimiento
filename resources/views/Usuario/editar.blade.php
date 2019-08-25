@@ -9,7 +9,7 @@
 
   <form method="POST" action="{{route('Usuario.update',$Alumno->id)}}" >
     @method('PUT');
-      @csrf
+    @csrf
     <h1>Editar el Alumno: {{$Alumno->NombreUsuario}}</h1>
 
     <input type="text" name="NombreUsuario" placeholder="nombre" class="form-control mb-2" value={{$Alumno->NombreUsuario}}>

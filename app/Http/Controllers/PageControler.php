@@ -7,7 +7,7 @@ use App;
 class PageControler extends Controller
 {
     public function inicio(){
-      return view('welcome');
+      return view('bienvenido');
     }
 
     public function Prueba(){

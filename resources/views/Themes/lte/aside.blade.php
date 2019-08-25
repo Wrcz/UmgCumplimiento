@@ -16,7 +16,7 @@
      <!-- search form -->
      <form action="#" method="get" class="sidebar-form">
        <div class="input-group">
-         <input type="text" name="q" class="form-control" placeholder="Search...">
+         <input type="text" name="q" class="form-control" placeholder="Buscar...">
              <span class="input-group-btn">
                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                </button>
@@ -36,10 +36,10 @@
          </a>
          <ul class="treeview-menu">
            <li><a href="#"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-           <li><a href="#"><i class="fa fa-circle-o"></i> Empresas</a></li>
+           <li><a href="{{route('Empresas.empresas')}}"><i class="fa fa-circle-o"></i> Empresas</a></li>
          </ul>
        </li>
-       <li class="treeview active">
+       <li class="treeview">
          <a href="#">
            <i class="fa fa-files-o"></i>
            <span>Gestión de Regulaciones</span>
