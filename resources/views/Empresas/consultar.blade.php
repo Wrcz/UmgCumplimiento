@@ -116,14 +116,12 @@
                 
                 <br>
                 
-                    <input type="checkbox" id="estadoempresa" 
-                    @if ($Empresa->estadoempresa==1)
-                      checked
-                    @else
-                      unchecked
-                    @endif>
-                    <label class="custom-control-label" for="estadoempresa">Estado Empresa</label>
-              
+                <select name="estadoempresa" class="form-control select2"  style="width: 100%;" 
+                value="@if ($Empresa->estadoempresa==true) Activa @else Inactiva  @endif) " >
+                  <option @if ($Empresa->estadoempresa==true)  Selected @endif >Activa</option>
+                  <option @if ($Empresa->estadoempresa==false) Selected @endif >Inactiva</option>
+                  
+              </select>              
 
               </div>
               <!-- /.box-body -->

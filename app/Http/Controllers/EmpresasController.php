@@ -99,26 +99,43 @@ class EmpresasController extends Controller
       
       //Metodo Para Actualizar Empresas
       public function actualizar(Request $request, $id){
+        try {
+
         $request->validate([
           'nombreempresa'=>'required',
           'tipoindustria'=>'required',
           'correoelectronico'=>'required',
           'pais'=>'required',
-          'direccion'=>'required'
+          'direccion'=>'required',
+          'estadoempresa'=>'required',
           ]);
 
-       
-        $Empresa = App\empresas::findOrFail($id);
+        $Chk_estadoempresa =false;
 
+        if ($request->estadoempresa=="Activa")
+         $Chk_estadoempresa=true;
+        else
+          $Chk_estadoempresa=false;
+
+        $Empresa = App\empresas::findOrFail($id);
         $Empresa->nombreempresa=$request->nombreempresa;
         $Empresa->tipoindustria=$request->tipoindustria;
         $Empresa->correoelectronico=$request->correoelectronico;
         $Empresa->pais=$request->pais;
         $Empresa->direccion=$request->direccion;
-        $Empresa->estadoempresa=false;
+        $Empresa->estadoempresa=$Chk_estadoempresa;
         $Empresa->save();
 
+        
         return back()->with('mensaje', 'Empresa actualizada.');
+
+      } catch (\Illuminate\Database\QueryException $e)  {
+        report($e);
+        return back()->with('mensajeerror', 'Ocurrio un error al guardar los cambios.');
+
+      } catch (PDOException $e) {
+        return back()->with('mensajeerror', 'currio un error al guardar los cambios.');
+      }
       }
 
 }
