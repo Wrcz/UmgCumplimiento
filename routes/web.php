@@ -42,7 +42,17 @@ Route::delete('/usuarios/eliminar/{id}', 'UsuariosController@eliminar')->name('U
 Route::get('/usuarios/consultar/{id}', 'UsuariosController@consultar')->name('Usuarios.consultar');
 
 Route::put('/usuarios/consultar/{id}', 'UsuariosController@actualizar')->name('Usuarios.actualizar');
+
+Route::put('/usuarios/empresas/{id}/{emp}', 'UsuariosController@actualizarempresas')->name('Usuarios.actualizarempresas');
 //fin Rutas para usuarios
+
+//Rutas para regulaciones
+Route::get('/regulaciones', 'RegulacionesController@regulaciones')->name('Regulaciones.regulaciones');
+
+Route::post('/regulaciones/agregar', 'RegulacionesController@agregar')->name('Regulaciones.agregar');
+
+Route::delete('/regulaciones/eliminar/{id}', 'RegulacionesController@eliminar')->name('Regulaciones.eliminar');
+//fin Rutas para regulaciones
 
 Route::get('/Prueba/{nombre?}', 'PageControler@Prueba')->name('Prueba');
 

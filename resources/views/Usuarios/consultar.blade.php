@@ -71,7 +71,7 @@
             @enderror
             @error('correoelectronico')
             <div class="alert alert-warning alert-dismissible" role="alert">
-                Debe seleccionar un correo electrónico
+                Debe ingresar un correo electrónico
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
             </div>
@@ -90,11 +90,15 @@
                     </div>
                     <div class="box-body">
                         <input name="idusuario" class="form-control input-lg" type="text"
-                        value="{{$Usuario->idusuario}}"  disabled>
+                            value="{{$Usuario->idusuario}}" disabled>
+                        <br>
+                        <input name="correoelectronico" type="email" class="form-control"
+                            placeholder="Correo Electrónico" value={{$Usuario->correoelectronico}} disabled>
                         <br>
                         <input name="nombreusuario" class="form-control input-lg" type="text"
                             placeholder="Nombre usuario" value={{$Usuario->nombreusuario}}>
                         <br>
+
                         <select name="nivelusuario" class="form-control select2" style="width: 100%;">
                             @foreach ($Niveles as $nivel)
                             <option value="{{$nivel->idnivelusuario}}" @if ($Usuario->
@@ -104,20 +108,20 @@
                             @endforeach
                         </select>
                         <br>
-                        <input name="correoelectronico" type="email" class="form-control"
-                            placeholder="Correo Electrónico" value={{$Usuario->correoelectronico}}>
-                        <br>
-                        <input name="password" type="password" class="form-control" placeholder="Contraseña"
-                            value="">
+
+                        <input name="password" type="password" class="form-control" placeholder="Contraseña" value="">
                         <br>
                         <input name="password_confirmation" type="password" class="form-control"
-                            placeholder="Repita la Contraseña" value="">
+                            placeholder="Confirme la Contraseña" value="">
                         <br>
 
                         <select name="estadousuario" class="form-control select2" style="width: 100%;">
                             <option value="1" @if ($Usuario->estadousuario==true) Selected @endif>Activo</option>
                             <option value="0" @if ($Usuario->estadousuario==false) Selected @endif>Inactivo</option>
                         </select>
+                        <br>
+                        <input name="cambiarpass" type="checkbox" class="form-check-input" >
+                        <label class="form-check-label" for="exampleCheck1">Cambiar Contraseña</label>
 
                     </div>
                     <!-- /.box-body -->
@@ -138,7 +142,7 @@
                             <h3 class="box-title">Asignacion de Empresas</h3>
                         </div>
                         <div class="box-body">
-                            <table id="regulaciones" class="table table-striped table-bordered">
+                            <table id="empresas" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
@@ -167,7 +171,7 @@
                                         </td>
                                         <td>
                                             <form method="POST"
-                                                action="{{route('Empresas.actualizarregulacion',['id'=> $Empresa->idempresa,'regula'=>$Usuario->idusuario])}}"
+                                                action="{{route('Usuarios.actualizarempresas',['id'=> $Usuario->idusuario ,'empresa'=>$Empresa->idempresa])}}"
                                                 class="d-inline">
                                                 @method('PUT')
                                                 @csrf

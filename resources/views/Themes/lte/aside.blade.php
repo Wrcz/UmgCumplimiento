@@ -48,7 +48,7 @@
            </span>
          </a>
          <ul class="treeview-menu">
-           <li><a href="#"><i class="fa fa-circle-o"></i> Regulaciones</a></li>
+           <li><a href="{{route('Regulaciones.regulaciones')}}"><i class="fa fa-circle-o"></i> Regulaciones</a></li>
            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Secciones</a></li>
            <li><a href="#"><i class="fa fa-circle-o"></i> Articulos</a></li>
            <li><a href="#"><i class="fa fa-circle-o"></i> Sanciones</a></li>

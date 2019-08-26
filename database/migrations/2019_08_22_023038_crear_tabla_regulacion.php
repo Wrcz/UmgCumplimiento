@@ -19,8 +19,8 @@ class CrearTablaRegulacion extends Migration
             $table->string('nombreregulacion');
             $table->string('descripcionregulacion');
             $table->string('pais');
-            $table->date('fechainiciovigencia');
-            $table->date('fechafinvigencia');
+            $table->date('fechainiciovigencia')->nullable();
+            $table->date('fechafinvigencia')->nullable();
             $table->boolean('estadoregulacion');
             $table->timestamps();
         });
