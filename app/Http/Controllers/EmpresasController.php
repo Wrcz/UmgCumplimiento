@@ -84,9 +84,9 @@ class EmpresasController extends Controller
             return view('Empresas.consultar', compact('Empresa'), compact('Regulaciones'));
         } catch (\Illuminate\Database\QueryException $e) {
             report($e);
-            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+            return back()->with('mensajeerror', 'Ocurrio un error al consultar los datos.');
         } catch (PDOException $e) {
-            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+            return back()->with('mensajeerror', 'Ocurrio un error al consultar los datos.');
         }
     }
       
@@ -130,8 +130,6 @@ class EmpresasController extends Controller
         }
     }
 
-
-      
     //Metodo para Consultar Empresas
     public function actualizarregulacion(Request $request, $id, $regula)
     {

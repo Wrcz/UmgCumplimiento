@@ -9,7 +9,7 @@
             <small>Mantenimiento</small> 
          </h1>     
         <ol class="breadcrumb">
-            <li><a href="{{route('bienvenido')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+            <li><a href="{{route("bienvenido")}}/"><i class="fa fa-dashboard"></i> Inicio</a></li>
             <li><a href="{{route('Empresas.empresas')}}">Empresas</a></li> 
          </ol>
       </section>

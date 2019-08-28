@@ -52,6 +52,19 @@ Route::get('/regulaciones', 'RegulacionesController@regulaciones')->name('Regula
 Route::post('/regulaciones/agregar', 'RegulacionesController@agregar')->name('Regulaciones.agregar');
 
 Route::delete('/regulaciones/eliminar/{id}', 'RegulacionesController@eliminar')->name('Regulaciones.eliminar');
+
+Route::get('/regulaciones/consultar/{id}', 'RegulacionesController@consultar')->name('Regulaciones.consultar');
+
+Route::put('/regulaciones/consultar/{id}', 'RegulacionesController@actualizar')->name('Regulaciones.actualizar');
+
+Route::delete('/seccion/eliminar/{id}', 'RegulacionesController@eliminarseccion')->name('Regulaciones.eliminarseccion');
+
+Route::put('/seccion/consultar/{id}', 'RegulacionesController@actualizarseccion')->name('Regulaciones.actualizarseccion');
+
+Route::post('/seccion/agregar/{id}', 'RegulacionesController@agregarseccion')->name('Regulaciones.agregarseccion');
+
+Route::post('/articulos/agregar/{id}', 'RegulacionesController@agregararticulo')->name('Regulaciones.agregararticulo');
+
 //fin Rutas para regulaciones
 
 Route::get('/Prueba/{nombre?}', 'PageControler@Prueba')->name('Prueba');

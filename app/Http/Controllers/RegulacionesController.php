@@ -14,12 +14,12 @@ class RegulacionesController extends Controller
         return view('Regulaciones.regulaciones');
     }
   
-    //Metodo para obtener usuarios
+    //Metodo para obtener Regulaciones
     public function regulaciones()
     {
         try {
             $Regulaciones =DB::table('regulacion')->get();
-         
+       
             return view('Regulaciones.regulaciones', compact('Regulaciones'));
         } catch (\Illuminate\Database\QueryException $e) {
             // dd($e);
@@ -30,19 +30,18 @@ class RegulacionesController extends Controller
         }
     }
   
-    //Metodo para Agregar usuarios
+    //Metodo para Agregar Regulaciones
     public function agregar(Request $request)
     {
         try {
-            
-        $request->validate([
+            $request->validate([
           'identificacion'=>'required',
           'nombreregulacion'=>'required',
           'descripcionregulacion'=>'required',
           'pais' => 'required'
           ]);
   
-        $Regulacion = Db::table('regulacion')->insert([
+            $Regulacion = Db::table('regulacion')->insert([
                'identificacion'=> $request->identificacion,
                 'nombreregulacion' => $request->nombreregulacion,
                 'descripcionregulacion' => $request->descripcionregulacion,
@@ -53,21 +52,17 @@ class RegulacionesController extends Controller
                 ]);
      
               
-        return back()->with('mensaje', 'Regulacion Agregada correctamente!');
-  
-          } catch (\Illuminate\Database\QueryException $e) {
-             
-              return back()->with('mensajeerror', 'Ocurrio un error al agregar la regulacion.');
-          } catch (PDOException $e) {
-             
-              return back()->with('mensajeerror', 'Ocurrio un error al agregar la regulacion.');
-          } catch (Exception $e) {
-              
-              return back()->with('mensajeerror', 'Ocurrio un error al agregar la regulacion.');
-          }
+            return back()->with('mensaje', 'Regulacion Agregada correctamente!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar la regulacion.');
+        } catch (PDOException $e) {
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar la regulacion.');
+        } catch (Exception $e) {
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar la regulacion.');
+        }
     }
   
-    //Metodo para Eliminar usuarios
+    //Metodo para Eliminar Regulaciones
     public function eliminar($idregulacion)
     {
         try {
@@ -81,61 +76,47 @@ class RegulacionesController extends Controller
         }
     }
   
-    //Metodo para Consultar usuarios
-    public function consultar($id)
+    //Metodo para Consultar Regulaciones
+    public function consultar($idregulacion)
     {
         try {
-            $Usuario = App\usuarios::findOrFail($id);
-            $Empresas = DB::select('SELECT e.idempresa,e.nombreempresa,e.estadoempresa, CASE WHEN  ue.idusuario IS NULL THEN 0 ELSE 1 END asignada FROM empresas e LEFT JOIN usuarios_empresas ue  ON e.idempresa=ue.idempresa AND ue.idusuario=?', [$id]);
-            $Niveles =Db::table('usuarios_nivel')->orderby('idnivelusuario')->get();
-            
-            return view('Usuarios.consultar', compact('Usuario', 'Empresas', 'Niveles'));
+            $Regulaciones = App\regulacion::findOrFail($idregulacion);
+            $Secciones = DB::select('SELECT * FROM regulacion_seccion rs WHERE rs.idregulacion=?', [$idregulacion]);
+            $Articulos =Db::select('SELECT ra.idarticulo,ra.numeroarticulo,ra.tituloarticulo,ra.estadoarticulo,ra.fechainiciovigencia,ra.fechafinvigencia, ra.idseccion,rs.noseccion FROM regulacion_articulo ra INNER JOIN regulacion_seccion rs ON ra.idseccion=rs.idseccion AND ra.idregulacion=rs.idregulacion WHERE rs.idregulacion=?', [$idregulacion]);
+      
+            return view('Regulaciones.consultar', compact('Regulaciones', 'Secciones', 'Articulos'));
         } catch (\Illuminate\Database\QueryException $e) {
-            report($e);
-            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+            dd($e);
+            return back()->with('mensajeerror', 'Ocurrio un error al consultar los datos.');
         } catch (PDOException $e) {
-            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+            return back()->with('mensajeerror', 'Ocurrio un error al consultar los datos.');
         }
     }
         
-    //Metodo Para Actualizar usuarios
-    public function actualizar(Request $request, $id)
+    //Metodo Para Actualizar Regulaciones
+    public function actualizar(Request $request, $idregulacion)
     {
         try {
-            $cambiarpass =false;
-              
-            if ($request->exists('cambiarpass')) {
-                $cambiarpass=true;
-            }
+            $request->validate([
+                      'identificacion'=>'required',
+                      'nombreregulacion'=>'required',
+                      'descripcionregulacion'=>'required',
+                      'pais'=>'required',
+                      'estadoregulacion' => 'required'
+                      ]);
            
-            if ($cambiarpass) {
-                $request->validate([
-                      'nombreusuario'=>'required',
-                      'nivelusuario'=>'required',
-                      'estadousuario'=>'required',
-                      'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
-                      'password_confirmation' => 'min:6'
-                      ]);
-            } else {
-                $request->validate([
-                      'nombreusuario'=>'required',
-                      'nivelusuario'=>'required',
-                      'estadousuario'=>'required'
-                      ]);
-            }
-             
-             
-            $Usuario = App\usuarios::findOrFail($id);
-            $Usuario->nombreusuario=$request->nombreusuario;
-            $Usuario->idnivelusuario=$request->nivelusuario;
-            if ($cambiarpass) {
-                $Usuario->password=bcrypt($request->password);
-            }
-            $Usuario->estadousuario=$request->estadousuario;
+            $Usuario = App\regulacion::findOrFail($idregulacion);
+            $Usuario->identificacion=$request->identificacion;
+            $Usuario->nombreregulacion=$request->nombreregulacion;
+            $Usuario->descripcionregulacion=$request->descripcionregulacion;
+            $Usuario->pais=$request->pais;
+            $Usuario->fechainiciovigencia=$request->fechainicio;
+            $Usuario->fechafinvigencia=$request->fechafin;
+            $Usuario->estadoregulacion=$request->estadoregulacion;
             $Usuario->save();
   
           
-            return back()->with('mensaje', 'Usuario actualizado.');
+            return back()->with('mensaje', 'Regulación actualizada.');
         } catch (\Illuminate\Database\QueryException $e) {
             report($e);
             return back()->with('mensajeerror', 'Ocurrio un error al guardar los cambios.'. $e);
@@ -144,31 +125,106 @@ class RegulacionesController extends Controller
         }
     }
      
-    //Metodo para actualizar Usuarios/Empresas
-    public function actualizarempresas(Request $request, $id, $empresa)
+    //Metodo para Eliminar Regulaciones
+    public function eliminarseccion($idseccion)
     {
         try {
-            $estadoasociacion = false;
-            
-            if ($request->accion=="asociar") {
-                $estadoasociacion = true;
-            } else {
-                $estadoasociacion = false;
-            }
-          
-            if ($estadoasociacion) {
-                $Actualiza = App\usuarios_empresas::updateOrCreate(['idusuario'=>$id,'idempresa'=>$empresa], ['idusuario'=>$id,'idempresa'=>$empresa]);
-            } else {
-                $Elimina = App\usuarios_empresas::where(['idusuario'=>$id,'idempresa'=>$empresa])->delete();
-            }
-  
-  
-            return back()->with('mensaje', 'Se guardaron los cambios correctamente.');
+            $Seccion = Db::table('regulacion_seccion')->where('idseccion', $idseccion)->delete();
+            return back()->with('mensaje', 'Seccion Eliminada.');
         } catch (\Illuminate\Database\QueryException $e) {
-            report($e);
-            return back()->with('mensajeerror', 'Ocurrio un error al asociar la empresa.' . $e);
+            dd($e);
+            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
         } catch (PDOException $e) {
-            return back()->with('mensajeerror', 'Ocurrio un error al asociar la empresa');
+            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+        }
+    }
+
+    public function actualizarseccion(Request $request, $idseccion)
+    {
+        try {
+            $request->validate([
+                      'noseccion'=>'required',
+                      'tituloseccion'=>'required',
+                      'descripcionseccion'=>'required'
+                      ]);
+            
+                    
+
+            $Seccion = DB::table('regulacion_seccion')->where('idseccion', $idseccion)->update(['noseccion' => $request->noseccion,'tituloseccion'=>$request->tituloseccion,'descripcionseccion'=>$request->descripcionseccion,'estadoseccion'=>$request->estadoseccion]);
+                  
+            return back()->with('mensaje', 'Secciòn actualizada.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            dd($e);
+            return back()->with('mensajeerror', 'Ocurrio un error al guardar los cambios.'. $e);
+        } catch (PDOException $e) {
+            dd($e);
+            return back()->with('mensajeerror', 'currio un error al guardar los cambios.');
+        }
+    }
+
+    //Metodo para Agregar Regulaciones
+    public function agregarseccion(Request $request, $idregulacion)
+    {
+        try {
+            $request->validate([
+            'noseccion'=>'required',
+            'tituloseccion'=>'required',
+            'descripcionseccion'=>'required'
+            ]);
+    
+            $Regulacion = Db::table('regulacion_seccion')->insert([
+                'idregulacion'=> $idregulacion,
+                 'noseccion'=> $request->noseccion,
+                  'tituloseccion' => $request->tituloseccion,
+                  'descripcionseccion' => $request->descripcionseccion,
+                  'estadoseccion'=>true
+                  ]);
+       
+                
+            return back()->with('mensaje', 'Seccion Agregada correctamente!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            dd($e);
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar la seccion.');
+        } catch (PDOException $e) {
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar la seccion.');
+        } catch (Exception $e) {
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar la seccion.');
+        }
+    }
+    
+    //Metodo para Agregar Articulos
+    public function agregararticulo(Request $request, $idregulacion)
+    {
+        try {
+            $request->validate([
+             'idseccion'=>'required',
+             'numeroarticulo'=>'required',
+             'ordenarticulo'=>'required',
+             'tituloarticulo'=>'required',
+             'descripcionarticulo'=>'required'
+             ]);
+     
+            $Articulos = Db::table('regulacion_articulo')->insert([
+                 'idregulacion'=> $idregulacion,
+                 'idseccion'=> $request->idseccion,
+                 'numeroarticulo'=> $request->numeroarticulo,
+                  'ordenarticulo'=> $request->ordenarticulo,
+                   'tituloarticulo' => $request->tituloarticulo,
+                   'descripcionarticulo' => $request->descripcionarticulo,
+                   'fechainiciovigencia' => $request->fechainiciovigencia,
+                   'fechafinvigencia' => $request->fechafinvigencia,
+                   'estadoarticulo'=>true
+                   ]);
+        
+                 
+            return back()->with('mensaje', 'Articulo Agregado correctamente!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            dd($e);
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar el articulo.');
+        } catch (PDOException $e) {
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar la seccion.');
+        } catch (Exception $e) {
+            return back()->with('mensajeerror', 'Ocurrio un error al agregar la seccion.');
         }
     }
 }

@@ -21,8 +21,8 @@ class CrearTablaRegulacionArticulo extends Migration
             $table->integer('ordenarticulo');
             $table->string('tituloarticulo');
             $table->string('descripcionarticulo');
-            $table->date('fechainiciovigencia');
-            $table->date('fechafinvigencia');
+            $table->date('fechainiciovigencia')>nullable();
+            $table->date('fechafinvigencia')>nullable();
             $table->boolean('estadoarticulo');
             $table->timestamps();
 

@@ -15,7 +15,7 @@
         <small>Edicion de Usuarios</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{{route('bienvenido')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><a href="{{route("bienvenido")}}/"><i class="fa fa-dashboard"></i> Inicio</a></li>
         <li><a href="{{route('Usuarios.usuarios')}}">Usuarios</a></li>
         <li><a href="#">Editar Usuarios</a></li>
     </ol>

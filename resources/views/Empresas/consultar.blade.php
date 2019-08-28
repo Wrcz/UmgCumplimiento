@@ -15,7 +15,7 @@
         <small>Edicion de Empresas</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{{route('bienvenido')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><a href="{{route("bienvenido")}}/"><i class="fa fa-dashboard"></i> Inicio</a></li>
         <li><a href="{{route('Empresas.empresas')}}">Empresas</a></li>
         <li><a href="#">Editar Empresa</a></li>
     </ol>
@@ -88,6 +88,7 @@
 
 
             <!-- formulario de Modificacion -->
+            
             <form method="POST" action="{{route('Empresas.actualizar',$Empresa->idempresa)}}">
                 @method('PUT')
                 @csrf
@@ -145,6 +146,7 @@
             </form>
             <!-- fin formulario de Modificacion -->
 
+        
             <!-- Tabla de Asignacion de Regulaciones -->
             <div class="row">
                 <div class="col-xs-12">

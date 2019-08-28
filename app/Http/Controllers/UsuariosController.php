@@ -78,9 +78,9 @@ class UsuariosController extends Controller
             return back()->with('mensaje', 'Usuario Eliminada.');
         } catch (\Illuminate\Database\QueryException $e) {
             report($e);
-            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+            return back()->with('mensajeerror', 'Ocurrio un error al consultar los datos.');
         } catch (PDOException $e) {
-            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+            return back()->with('mensajeerror', 'Ocurrio un error al consultar los datos.');
         }
     }
 

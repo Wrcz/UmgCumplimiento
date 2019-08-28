@@ -9,7 +9,7 @@
         <small>Mantenimiento</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{{route('bienvenido')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><a href="{{route('bienvenido')}}/"><i class="fa fa-dashboard"></i> Inicio</a></li>
         <li><a href="{{route('Regulaciones.regulaciones')}}">Regulaciones</a></li>
     </ol>
 </section>
@@ -81,10 +81,14 @@
 
                                         </td>
                                         <td>
-                                            <form action="{{route('Regulaciones.eliminar',$Regulacion->idregulacion)}}" method="POST" class="d-inline">
+                                            
+
+                                            <form action="{{route('Regulaciones.eliminar',$Regulacion->idregulacion)}}"
+                                                method="POST" class="d-inline">
                                                 @method('DELETE')
                                                 @csrf
-                                                <a href="#" class="btn btn-warning btn-xs">Editar</a>
+                                                <a href="{{route('Regulaciones.consultar',$Regulacion->idregulacion)}}"
+                                                        class="btn btn-warning btn-xs">Editar</a>
                                                 <button class="btn btn-danger btn-xs" type="submit">Eliminar</button>
                                             </form>
                                         </td>
@@ -153,18 +157,18 @@
                             placeholder="Identificacion" value="{{old('identificacion')}}">
                         <br>
                         <input name="nombreregulacion" type="text" class="form-control" placeholder="Nombre Regulacion"
-                            value="{{old('nombreregulacion')}}"">
+                            value="{{old('nombreregulacion')}}">
                         <br>
                         <input name=" descripcionregulacion" type="text" class="form-control"
-                            placeholder="Descripcion Regulacion" value="{{old('descripcionregulacion')}}"">
+                            placeholder="Descripcion Regulacion" value="{{old('descripcionregulacion')}}">
                         <br>
                         <input name=" pais" type="country" class="form-control" placeholder="Pais Regulacion"
-                            value="{{old('pais')}}"">
+                            value="{{old('pais')}}">
                         <br>
 
 
                         <input name=" fechainicio" type="date" class="form-control" placeholder="Fecha Inicio Vigencia"
-                            value="{{old('fechainicio')}}"">
+                            value="{{old('fechainicio')}}">
                         <br>
                         <input name=" fechafin" type="date" class="form-control" placeholder="Fecha fin Vigencia"
                             value="{{old('fechafin')}}">

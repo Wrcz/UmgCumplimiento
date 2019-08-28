@@ -31,27 +31,13 @@
          <a href="#">
            <i class="fa fa-dashboard"></i> <span>Configuración</span>
            <span class="pull-right-container">
-             <i class="label label-primary pull-right">2</i>
+             <i class="label label-primary pull-right">3</i>
            </span>
          </a>
          <ul class="treeview-menu">
            <li><a href="{{route('Usuarios.usuarios')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
            <li><a href="{{route('Empresas.empresas')}}"><i class="fa fa-circle-o"></i> Empresas</a></li>
-         </ul>
-       </li>
-       <li class="treeview">
-         <a href="#">
-           <i class="fa fa-files-o"></i>
-           <span>Gestión de Regulaciones</span>
-           <span class="pull-right-container">
-             <span class="label label-primary pull-right">4</span>
-           </span>
-         </a>
-         <ul class="treeview-menu">
            <li><a href="{{route('Regulaciones.regulaciones')}}"><i class="fa fa-circle-o"></i> Regulaciones</a></li>
-           <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Secciones</a></li>
-           <li><a href="#"><i class="fa fa-circle-o"></i> Articulos</a></li>
-           <li><a href="#"><i class="fa fa-circle-o"></i> Sanciones</a></li>
          </ul>
        </li>
        <li class="treeview">
