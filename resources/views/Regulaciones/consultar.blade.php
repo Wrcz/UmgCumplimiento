@@ -400,7 +400,7 @@
                                                     <td >
                                                             <label class="select2">Estado </label>
                                                             <br>
-                                                            <select name="estadoarticulo" class="form-control select2" style="width: 85%;"
+                                                            <select name="estadoarticulo" class="form-control select2" style="width: 100%;"
                                                                 value="@if ($Articulo->estadoarticulo==true) Activo @else Inactivo  @endif) ">
     
                                                                 <option @if ($Articulo->estadoarticulo==true) Selected
