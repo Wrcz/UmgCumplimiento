@@ -69,6 +69,13 @@ Route::put('/articulos/actualizar/{id}', 'RegulacionesController@actualizarartic
 
 Route::delete('/articulos/eliminar/{id}', 'RegulacionesController@eliminararticulo')->name('Regulaciones.eliminararticulo');
 
+Route::get('/sanciones/consultar/{id}/{reg}', 'SancionesController@sancion')->name('Regulaciones.sancion');
+
+Route::delete('/sanciones/consultar/{id}', 'SancionesController@eliminarsancion')->name('Regulaciones.eliminarsancion');
+
+Route::put('/sanciones/consultar/{id}', 'SancionesController@actualizarsancion')->name('Regulaciones.actualizarsancion');
+
+Route::post('/sanciones/agregar/{id}', 'SancionesController@agregarsancion')->name('Regulaciones.agregarsancion');
 //fin Rutas para regulaciones
 
 Route::get('/Prueba/{nombre?}', 'PageControler@Prueba')->name('Prueba');

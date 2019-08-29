@@ -100,7 +100,7 @@
                     <div class="box-body">
                         <input name="idempresa" class="form-control input-lg" type="text" placeholder="id"
                             value={{$Empresa->idempresa}} disabled>
-                        </br>
+                        <br>
 
                         <input name="nombreempresa" class="form-control input-lg" type="text"
                             value="{{$Empresa->nombreempresa}}">

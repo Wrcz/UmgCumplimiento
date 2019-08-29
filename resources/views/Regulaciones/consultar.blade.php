@@ -25,8 +25,10 @@
             Esta página le permite dar mantenimiento a regulaciones para gestionar el cumplimiento.
         </div>
 
-        <!-- Alertas de Mensaje -->
+       
         <section class="content">
+
+             <!-- Alertas de Mensaje -->
             @if (session('mensaje'))
             <div class="alert alert-success  alert-dismissible">
                 {{session('mensaje')}}
@@ -369,8 +371,11 @@
                                                             class="form-control select2" style="width: 100%;"
                                                             value="{{$Articulo->ordenarticulo}}">
                                                             <br>
-                                                            <a href="#" class="btn btn-primary btn-xs">Sanciones</a>  
                                                             
+                                                            <a href="{{route('Regulaciones.sancion',['id'=>$Articulo->idarticulo,'idregulacion'=>$Regulaciones->idregulacion])}}"  class="btn btn-primary btn-xs">Sanciones</a>  
+                                                            
+
+                                                             
                                                     </td>
                                                     <td>
                                                           <label class="select2">Seccion </label>
