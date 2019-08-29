@@ -82,7 +82,10 @@ class RegulacionesController extends Controller
         try {
             $Regulaciones = App\regulacion::findOrFail($idregulacion);
             $Secciones = DB::select('SELECT * FROM regulacion_seccion rs WHERE rs.idregulacion=?', [$idregulacion]);
-            $Articulos =Db::select('SELECT ra.idarticulo,ra.numeroarticulo,ra.tituloarticulo,ra.estadoarticulo,ra.fechainiciovigencia,ra.fechafinvigencia, ra.idseccion,rs.noseccion FROM regulacion_articulo ra INNER JOIN regulacion_seccion rs ON ra.idseccion=rs.idseccion AND ra.idregulacion=rs.idregulacion WHERE rs.idregulacion=?', [$idregulacion]);
+            $Articulos =Db::select('SELECT ra.idarticulo,ra.numeroarticulo,ra.ordenarticulo,ra.descripcionarticulo, ra.tituloarticulo,ra.estadoarticulo,ra.fechainiciovigencia,
+                                    ra.fechafinvigencia, ra.idseccion,rs.noseccion,rs.tituloseccion FROM regulacion_articulo ra INNER JOIN 
+                                    regulacion_seccion rs ON ra.idseccion=rs.idseccion AND 
+                                    ra.idregulacion=rs.idregulacion WHERE rs.idregulacion=? order by rs.noseccion,ra.ordenarticulo', [$idregulacion]);
       
             return view('Regulaciones.consultar', compact('Regulaciones', 'Secciones', 'Articulos'));
         } catch (\Illuminate\Database\QueryException $e) {
@@ -227,4 +230,55 @@ class RegulacionesController extends Controller
             return back()->with('mensajeerror', 'Ocurrio un error al agregar la seccion.');
         }
     }
+
+     //Metodo Para Actualizar Regulaciones
+     public function actualizararticulo(Request $request, $idarticulo)
+     {
+         try {
+             
+             $request->validate([
+                       'numeroarticulo'=>'required',
+                       'tituloarticulo'=>'required',
+                       'idseccion'=>'required',
+                       'ordenarticulo'=>'required',
+                       'estadoarticulo' => 'required',
+                       'descripcionarticulo' => 'required'
+                       ]);
+            
+             $Articulo = DB::table('regulacion_articulo')->where('idarticulo', $idarticulo)
+             ->update([
+             'numeroarticulo' => $request->numeroarticulo,
+             'idseccion'=>$request->idseccion,
+             'ordenarticulo'=>$request->ordenarticulo,
+             'tituloarticulo'=>$request->tituloarticulo,
+             'descripcionarticulo'=>$request->descripcionarticulo,
+             'fechainiciovigencia'=>$request->fechainicio,
+             'fechafinvigencia'=>$request->fechafin,
+             'estadoarticulo'=>$request->estadoarticulo
+             ]);
+           
+             return back()->with('mensaje', 'Artículo actualizado.');
+         } catch (\Illuminate\Database\QueryException $e) {
+             dd($e);
+             return back()->with('mensajeerror', 'Ocurrio un error al guardar los cambios.'. $e);
+         } catch (PDOException $e) {
+             return back()->with('mensajeerror', 'currio un error al guardar los cambios.');
+         }
+     }
+
+      //Metodo para Eliminar articulos
+    public function eliminararticulo($idarticulos)
+    {
+        try {
+            $Articulo = Db::table('regulacion_articulo')->where('idarticulo', $idarticulos)->delete();
+            
+            return back()->with('mensaje', 'Articulo Eliminada.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+        } catch (PDOException $e) {
+            return back()->with('mensajeerror', 'Ocurrio un error al eliminar.');
+        }
+    }
+  
 }

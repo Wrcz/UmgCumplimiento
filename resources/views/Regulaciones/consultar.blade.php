@@ -2,11 +2,7 @@
 @extends('Plantilla')
 
 @section('seccion')
-<style>
-    .ocultarcol {
-        display: none;
-    }
-</style>
+
 
 
 @section('titulo')
@@ -79,7 +75,7 @@
             <!-- Alertas de Mensaje -->
 
 
-            <!-- formulario de Modificacion -->
+            <!-- formulario de Modificacion de regulaciones -->
             <form method="POST" action={{route('Regulaciones.actualizar',$Regulaciones->idregulacion)}}>
                 @method('PUT')
                 @csrf
@@ -160,13 +156,13 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Secciones/Capitulos Relacionados</h3>
-                            
+
                         </div>
                         <div class="box-body">
 
                             <table id="Secciones" class="table table-striped table-bordered">
                                 <thead>
-                                       
+
                                     <tr>
                                         <th>Id</th>
                                         <th>No. Seccion</th>
@@ -175,13 +171,13 @@
                                         <th>Estado Sección</th>
                                         <th></th>
                                         <th></th>
-                                        <th></th>
+
                                     </tr>
-                                    
+
                                 </thead>
                                 <tbody>
                                     @foreach ($Secciones as $Seccion)
-                                    
+
                                     <tr>
                                         <form method="POST"
                                             action="{{route('Regulaciones.actualizarseccion',$Seccion->idseccion)}}">
@@ -225,14 +221,12 @@
                                             </form>
 
                                         </td>
-                                        <td>
-                                                <a href="" class="btn btn-primary btn-xs" >Articulos</button>
-                                        </td>
+
 
                                     </tr>
 
                                     @endforeach
-                                    
+
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -243,7 +237,7 @@
                                         <th>Estado Sección</th>
                                         <th></th>
                                         <th></th>
-                                        <th></th>
+
                                     </tr>
                                 </tfoot>
                             </table>
@@ -253,7 +247,7 @@
             </div>
             <!-- Tabla de Asignacion de Regulaciones -->
 
-
+            <!-- formulario para Agregar nueva Seccion -->
             <form method="POST" action="{{route('Regulaciones.agregarseccion',$Regulaciones->idregulacion)}}">
                 @csrf
                 <!-- Form Element sizes -->
@@ -269,9 +263,10 @@
                         <input name="tituloseccion" type="text" class="form-control" placeholder="Titulo Seccion"
                             value="{{old('tituloseccion')}}">
                         <br>
-                        <textarea name="descripcionseccion" type="text" class="textarea"  placeholder="Descripcion Seccion" value="{{old('descripcionseccion')}}"
-                        style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                        
+                        <textarea name="descripcionseccion" type="text" class="textarea"
+                            placeholder="Descripcion Seccion" value="{{old('descripcionseccion')}}"
+                            style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+
                         <br>
                     </div>
                     <!-- /.box-body -->
@@ -316,52 +311,215 @@
             @enderror
             <!-- Alertas de Mensaje -->
 
-            <form method="POST" action="{{route('Regulaciones.agregararticulo',$Regulaciones->idregulacion)}}">
-                    @csrf
-                    <!-- Form Element sizes -->
-                    <div class="box box-success">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Agregar Nuevo Articulo</h3>
+
+            <!-- Tabla de Asignacion de Articulos -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Articulos</h3>
+
                         </div>
-    
                         <div class="box-body">
-                           
-                           
-                            <select name="idseccion" class="form-control select2" style="width: 100%;">
-                                <option value="{{old('idseccion')}}" disabled selected>Seccion</option>
-                                @foreach ($Secciones as $Seccion)
-                                <option value="{{$Seccion->idseccion}}" ><?php echo($Seccion->idseccion . " - " . $Seccion->tituloseccion) ; ?>  </option>
-                                @endforeach
-                            </select>
-                            <br>
-                            <input name="numeroarticulo" class="form-control input-lg" type="text" placeholder="No. Articulo"
-                                value="{{old('numeroarticulo')}}">
-                            <br>
-                            <input name="ordenarticulo" type="text" class="form-control" placeholder="Orden"
-                                value="{{old('ordenarticulo')}}">
-                            <br>
-                            <input name="tituloarticulo" type="text" class="form-control" placeholder="Titulo"
-                                value="{{old('tituloarticulo')}}">
-                            <br>
-                            <textarea name="descripcionarticulo" type="text" class="textarea"  placeholder="Descripcion Articulo" value="{{old('descripcionarticulo')}}"
-                            style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            <br><br>
-                            <input name="fechainicio" type="date" class="form-control" placeholder="Fecha Inicio vigencia"
-                                value="{{old('fechainicio')}}">
-                            <br>
-                            <input name="fechafin" type="date" class="form-control" placeholder="Fecha Fin vigencia"
-                                value="{{old('fechafin')}}">
-                            <br>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer">
-                            <p>
-                                <button type="submit" class="btn bg-orange">Guardar Datos</button>
-                            </p>
+
+                            <table id="Articulos" class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                        <th>Id</th>
+                                        <th style="width:20%" >Información del Artículo</th>
+                                        <th style="width:20%"> </th>
+                                        <th style="width:50%"> </th>
+                                        <th > </th>
+                                        <th > </th>
+
+                                </tr>
+
+                                </thead>
+                                <tbody>
+                                    @foreach ($Articulos as $Articulo)
+
+                                    <tr>
+                                        <form method="POST"
+                                            action="{{route('Regulaciones.actualizararticulo',$Articulo->idarticulo)}}">
+                                            @method('PUT')
+                                            @csrf
+                                           
+                                                    <td>
+                                                        <label name="idarticulo" class="select2"
+                                                            value="{{$Articulo->idarticulo}}">
+                                                            {{$Articulo->idarticulo}}</label>
+                                                    </td>
+
+                                                    <td>
+                                                        <label class="select2">No. Articulo </label>
+                                                        <br>
+                                                        <input name="numeroarticulo" type="text"
+                                                            class="form-control select2" style="width: 100%;"
+                                                            value="{{$Articulo->numeroarticulo}}">
+                                                            <br>
+                                                        <label class="select2">Título </label>
+                                                        <br>
+                                                        <input name="tituloarticulo" type="text"
+                                                            class="form-control select2" style="width: 100%;"
+                                                            value="{{$Articulo->tituloarticulo}}">
+                                                            <br>
+                                                            <label class="select2">Orden </label>
+                                                        <br>
+                                                        <input name="ordenarticulo" type="text" 
+                                                            class="form-control select2" style="width: 100%;"
+                                                            value="{{$Articulo->ordenarticulo}}">
+                                                            <br>
+                                                            <a href="#" class="btn btn-primary btn-xs">Sanciones</a>  
+                                                            
+                                                    </td>
+                                                    <td>
+                                                          <label class="select2">Seccion </label>
+                                                        <br>
+                                                        <select name="idseccion" class="form-control select2"  style="width: 100%;">
+                                                            @foreach ($Secciones as $Seccion)
+                                                                <option value="{{$Seccion->idseccion}}"  
+                                                                <?php if ($Articulo->idseccion==$Seccion->idseccion) 
+                                                                    echo ('Selected'); ?> >
+                                                                <?php echo($Seccion->idseccion . " - " . $Seccion->tituloseccion) ;?> 
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        <br>
+                                                        <label class="select2">Fecha Inicio Vigencia </label>
+                                                        <br>
+                                                        <input name="fechainicio" type="date" 
+                                                            class="form-control select2" style="width: 100%;"
+                                                            value="{{$Articulo->fechainiciovigencia}}">
+                                                            <br>
+                                                        <label class="select2">Fecha Fin Vigencia </label>
+                                                        <br>
+                                                        <input name="fechafin" type="date" class="form-control select2" style="width: 100%;"
+                                                            value="{{$Articulo->fechafinvigencia}}">
+                                                            
+                                                    </td>
+                                                    <td >
+                                                            <label class="select2">Estado </label>
+                                                            <br>
+                                                            <select name="estadoarticulo" class="form-control select2" style="width: 85%;"
+                                                                value="@if ($Articulo->estadoarticulo==true) Activo @else Inactivo  @endif) ">
+    
+                                                                <option @if ($Articulo->estadoarticulo==true) Selected
+                                                                    @endif
+                                                                    value="true"><span
+                                                                        class="label label-success">Activo</span>
+                                                                </option>
+                                                                <option @if ($Articulo->estadoarticulo==false) Selected
+                                                                    @endif
+                                                                    value="false"> <span
+                                                                        class="label label-danger">Inactivo</span>
+                                                                </option>
+    
+                                                            </select>
+                                                          
+                                                        <label class="select2">Descripción </label>
+                                                        <br>
+                                                        <textarea name="descripcionarticulo" type="text"
+                                                            class="textarea" placeholder="Descripcion Articulo"
+                                                            value="{{$Articulo->descripcionarticulo}}"
+                                                            style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$Articulo->descripcionarticulo}}</textarea>
+                                                            
+                                                    </td>
+
+                                                    <td >
+                                                        
+                                                        <button class="btn btn-warning btn-xs"
+                                                            type="submit">Guardar</button>
+                                                          
+                                                           
+                                                          
+                                                    </td>
+                                              
+                                        </form>
+
+                                        <td>
+                                            <form
+                                                action="{{route('Regulaciones.eliminararticulo',$Articulo->idarticulo)}}"
+                                                method="POST" class="d-inline">
+                                                @method('DELETE')
+                                                @csrf
+
+                                                <button class="btn btn-danger btn-xs" type="submit">Eliminar</button>
+                                            </form>
+
+                                        </td>
+
+
+                                    </tr>
+
+                                    @endforeach
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
-    
-                </form>
+                </div>
+            </div>
+            <!-- Tabla de Asignacion de Articulos -->
+
+
+            <!-- Formulario para agregar articulos -->
+            <form method="POST" name="agregararticulo" action="{{route('Regulaciones.agregararticulo',$Regulaciones->idregulacion)}}">
+                @csrf
+                <!-- Form Element sizes -->
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Agregar Nuevo Articulo</h3>
+                    </div>
+
+                    <div class="box-body">
+
+
+                        <select name="idseccion" class="form-control select2" style="width: 100%;">
+                            <option value="{{old('idseccion')}}" disabled selected>Seccion</option>
+                            @foreach ($Secciones as $Seccion)
+                            <option value="{{$Seccion->idseccion}}">
+                                <?php echo($Seccion->idseccion . " - " . $Seccion->tituloseccion) ; ?> </option>
+                            @endforeach
+                        </select>
+                        <br>
+                        <input name="numeroarticulo" class="form-control input-lg" type="text"
+                            placeholder="No. Articulo" value="{{old('numeroarticulo')}}">
+                        <br>
+                        <input name="ordenarticulo" type="text" class="form-control" placeholder="Orden"
+                            value="{{old('ordenarticulo')}}">
+                        <br>
+                        <input name="tituloarticulo" type="text" class="form-control" placeholder="Titulo"
+                            value="{{old('tituloarticulo')}}">
+                        <br>
+                        <textarea name="descripcionarticulo" type="text" class="textarea"
+                            placeholder="Descripcion Articulo" value="{{old('descripcionarticulo')}}"
+                            style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        <br><br>
+                        <input name="fechainicio" type="date" class="form-control" placeholder="Fecha Inicio vigencia"
+                            value="{{old('fechainicio')}}">
+                        <br>
+                        <input name="fechafin" type="date" class="form-control" placeholder="Fecha Fin vigencia"
+                            value="{{old('fechafin')}}">
+                        <br>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <p>
+                            <button type="submit" class="btn bg-orange">Guardar Datos</button>
+                        </p>
+                    </div>
+                </div>
+
+            </form>
         </section>
     </div>
 
@@ -378,7 +536,34 @@
             'info': true,
             'autoWidth': true
         });
+        $('#Articulos').DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': false,
+            'info': true,
+            'autoWidth': true
+        });
+        
+
     });
+
+/*
+window.onload=function(){
+var pos=window.name || 0;
+window.scrollTo(0,pos);
+}
+window.onunload=function(){
+window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
+}*/
+$(function () {
+     var top = parseInt($.cookie("top"));
+     if (top) $(document).scrollTop(top);
+         $(document).scroll(function () {
+             var top = $(document).scrollTop();
+             $.cookie("top", top);
+         })
+     });
 
 </script>
 

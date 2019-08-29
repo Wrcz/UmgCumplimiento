@@ -65,6 +65,10 @@ Route::post('/seccion/agregar/{id}', 'RegulacionesController@agregarseccion')->n
 
 Route::post('/articulos/agregar/{id}', 'RegulacionesController@agregararticulo')->name('Regulaciones.agregararticulo');
 
+Route::put('/articulos/actualizar/{id}', 'RegulacionesController@actualizararticulo')->name('Regulaciones.actualizararticulo');
+
+Route::delete('/articulos/eliminar/{id}', 'RegulacionesController@eliminararticulo')->name('Regulaciones.eliminararticulo');
+
 //fin Rutas para regulaciones
 
 Route::get('/Prueba/{nombre?}', 'PageControler@Prueba')->name('Prueba');
