@@ -25,10 +25,10 @@
             Esta página le permite dar mantenimiento a regulaciones para gestionar el cumplimiento.
         </div>
 
-       
+
         <section class="content">
 
-             <!-- Alertas de Mensaje -->
+            <!-- Alertas de Mensaje -->
             @if (session('mensaje'))
             <div class="alert alert-success  alert-dismissible">
                 {{session('mensaje')}}
@@ -96,8 +96,12 @@
                         <input name="nombreregulacion" type="country" class="form-control" type="text"
                             placeholder="Nombre Regulación" value="{{$Regulaciones->nombreregulacion}}">
                         <br>
-                        <input name="descripcionregulacion" type="address" class="form-control" type="text"
-                            placeholder="Descripción" value="{{$Regulaciones->descripcionregulacion}}">
+
+                        <textarea name="descripcionregulacion" type="text" class="textarea"
+                            placeholder="Descripcion Regulación" value="{{$Regulaciones->descripcionregulacion}}"
+                            style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$Regulaciones->descripcionregulacion}}</textarea>
+
+                        <br>
                         <br>
                         <input name="pais" type="address" class="form-control" type="text" placeholder="Pais"
                             value="{{$Regulaciones->pais}}">
@@ -326,15 +330,15 @@
 
                             <table id="Articulos" class="table table-striped table-bordered">
                                 <thead>
-                                <tr>
+                                    <tr>
                                         <th>Id</th>
-                                        <th style="width:20%" >Información del Artículo</th>
+                                        <th style="width:20%">Información del Artículo</th>
                                         <th style="width:20%"> </th>
                                         <th style="width:50%"> </th>
-                                        <th > </th>
-                                        <th > </th>
+                                        <th> </th>
+                                        <th> </th>
 
-                                </tr>
+                                    </tr>
 
                                 </thead>
                                 <tbody>
@@ -345,100 +349,95 @@
                                             action="{{route('Regulaciones.actualizararticulo',$Articulo->idarticulo)}}">
                                             @method('PUT')
                                             @csrf
-                                           
-                                                    <td>
-                                                        <label name="idarticulo" class="select2"
-                                                            value="{{$Articulo->idarticulo}}">
-                                                            {{$Articulo->idarticulo}}</label>
-                                                    </td>
 
-                                                    <td>
-                                                        <label class="select2">No. Articulo </label>
-                                                        <br>
-                                                        <input name="numeroarticulo" type="text"
-                                                            class="form-control select2" style="width: 100%;"
-                                                            value="{{$Articulo->numeroarticulo}}">
-                                                            <br>
-                                                        <label class="select2">Título </label>
-                                                        <br>
-                                                        <input name="tituloarticulo" type="text"
-                                                            class="form-control select2" style="width: 100%;"
-                                                            value="{{$Articulo->tituloarticulo}}">
-                                                            <br>
-                                                            <label class="select2">Orden </label>
-                                                        <br>
-                                                        <input name="ordenarticulo" type="text" 
-                                                            class="form-control select2" style="width: 100%;"
-                                                            value="{{$Articulo->ordenarticulo}}">
-                                                            <br>
-                                                            
-                                                            <a href="{{route('Regulaciones.sancion',['id'=>$Articulo->idarticulo,'idregulacion'=>$Regulaciones->idregulacion])}}"  class="btn btn-primary btn-xs">Sanciones</a>  
-                                                            
+                                            <td>
+                                                <label name="idarticulo" class="select2"
+                                                    value="{{$Articulo->idarticulo}}">
+                                                    {{$Articulo->idarticulo}}</label>
+                                            </td>
 
-                                                             
-                                                    </td>
-                                                    <td>
-                                                          <label class="select2">Seccion </label>
-                                                        <br>
-                                                        <select name="idseccion" class="form-control select2"  style="width: 100%;">
-                                                            @foreach ($Secciones as $Seccion)
-                                                                <option value="{{$Seccion->idseccion}}"  
-                                                                <?php if ($Articulo->idseccion==$Seccion->idseccion) 
-                                                                    echo ('Selected'); ?> >
-                                                                <?php echo($Seccion->idseccion . " - " . $Seccion->tituloseccion) ;?> 
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <br>
-                                                        <label class="select2">Fecha Inicio Vigencia </label>
-                                                        <br>
-                                                        <input name="fechainicio" type="date" 
-                                                            class="form-control select2" style="width: 100%;"
-                                                            value="{{$Articulo->fechainiciovigencia}}">
-                                                            <br>
-                                                        <label class="select2">Fecha Fin Vigencia </label>
-                                                        <br>
-                                                        <input name="fechafin" type="date" class="form-control select2" style="width: 100%;"
-                                                            value="{{$Articulo->fechafinvigencia}}">
-                                                            
-                                                    </td>
-                                                    <td >
-                                                            <label class="select2">Estado </label>
-                                                            <br>
-                                                            <select name="estadoarticulo" class="form-control select2" style="width: 100%;"
-                                                                value="@if ($Articulo->estadoarticulo==true) Activo @else Inactivo  @endif) ">
-    
-                                                                <option @if ($Articulo->estadoarticulo==true) Selected
-                                                                    @endif
-                                                                    value="true"><span
-                                                                        class="label label-success">Activo</span>
-                                                                </option>
-                                                                <option @if ($Articulo->estadoarticulo==false) Selected
-                                                                    @endif
-                                                                    value="false"> <span
-                                                                        class="label label-danger">Inactivo</span>
-                                                                </option>
-    
-                                                            </select>
-                                                          
-                                                        <label class="select2">Descripción </label>
-                                                        <br>
-                                                        <textarea name="descripcionarticulo" type="text"
-                                                            class="textarea" placeholder="Descripcion Articulo"
-                                                            value="{{$Articulo->descripcionarticulo}}"
-                                                            style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$Articulo->descripcionarticulo}}</textarea>
-                                                            
-                                                    </td>
+                                            <td>
+                                                <label class="select2">No. Articulo </label>
+                                                <br>
+                                                <input name="numeroarticulo" type="text" class="form-control select2"
+                                                    style="width: 100%;" value="{{$Articulo->numeroarticulo}}">
+                                                <br>
+                                                <label class="select2">Título </label>
+                                                <br>
+                                                <input name="tituloarticulo" type="text" class="form-control select2"
+                                                    style="width: 100%;" value="{{$Articulo->tituloarticulo}}">
+                                                <br>
+                                                <label class="select2">Orden </label>
+                                                <br>
+                                                <input name="ordenarticulo" type="text" class="form-control select2"
+                                                    style="width: 100%;" value="{{$Articulo->ordenarticulo}}">
+                                                <br>
 
-                                                    <td >
-                                                        
-                                                        <button class="btn btn-warning btn-xs"
-                                                            type="submit">Guardar</button>
-                                                          
-                                                           
-                                                          
-                                                    </td>
-                                              
+                                                <a href="{{route('Regulaciones.sancion',['id'=>$Articulo->idarticulo,'idregulacion'=>$Regulaciones->idregulacion])}}"
+                                                    class="btn btn-primary btn-xs">Sanciones</a>
+
+
+
+                                            </td>
+                                            <td>
+                                                <label class="select2">Seccion </label>
+                                                <br>
+                                                <select name="idseccion" class="form-control select2"
+                                                    style="width: 100%;">
+                                                    @foreach ($Secciones as $Seccion)
+                                                    <option value="{{$Seccion->idseccion}}" <?php if ($Articulo->idseccion==$Seccion->idseccion) 
+                                                                    echo ('Selected'); ?>>
+                                                        <?php echo($Seccion->idseccion . " - " . $Seccion->tituloseccion) ;?>
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                                <br>
+                                                <label class="select2">Fecha Inicio Vigencia </label>
+                                                <br>
+                                                <input name="fechainicio" type="date" class="form-control select2"
+                                                    style="width: 100%;" value="{{$Articulo->fechainiciovigencia}}">
+                                                <br>
+                                                <label class="select2">Fecha Fin Vigencia </label>
+                                                <br>
+                                                <input name="fechafin" type="date" class="form-control select2"
+                                                    style="width: 100%;" value="{{$Articulo->fechafinvigencia}}">
+
+                                            </td>
+                                            <td>
+                                                <label class="select2">Estado </label>
+                                                <br>
+                                                <select name="estadoarticulo" class="form-control select2"
+                                                    style="width: 100%;"
+                                                    value="@if ($Articulo->estadoarticulo==true) Activo @else Inactivo  @endif) ">
+
+                                                    <option @if ($Articulo->estadoarticulo==true) Selected
+                                                        @endif
+                                                        value="true"><span class="label label-success">Activo</span>
+                                                    </option>
+                                                    <option @if ($Articulo->estadoarticulo==false) Selected
+                                                        @endif
+                                                        value="false"> <span class="label label-danger">Inactivo</span>
+                                                    </option>
+
+                                                </select>
+
+                                                <label class="select2">Descripción </label>
+                                                <br>
+                                                <textarea name="descripcionarticulo" type="text" class="textarea"
+                                                    placeholder="Descripcion Articulo"
+                                                    value="{{$Articulo->descripcionarticulo}}"
+                                                    style="width: 122%; height: 200; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$Articulo->descripcionarticulo}}</textarea>
+
+                                            </td>
+
+                                            <td>
+
+                                                <button class="btn btn-warning btn-xs" type="submit">Guardar</button>
+
+
+
+                                            </td>
+
                                         </form>
 
                                         <td>
@@ -477,7 +476,8 @@
 
 
             <!-- Formulario para agregar articulos -->
-            <form method="POST" name="agregararticulo" action="{{route('Regulaciones.agregararticulo',$Regulaciones->idregulacion)}}">
+            <form method="POST" name="agregararticulo"
+                action="{{route('Regulaciones.agregararticulo',$Regulaciones->idregulacion)}}">
                 @csrf
                 <!-- Form Element sizes -->
                 <div class="box box-success">
@@ -507,7 +507,7 @@
                         <br>
                         <textarea name="descripcionarticulo" type="text" class="textarea"
                             placeholder="Descripcion Articulo" value="{{old('descripcionarticulo')}}"
-                            style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                         <br><br>
                         <input name="fechainicio" type="date" class="form-control" placeholder="Fecha Inicio vigencia"
                             value="{{old('fechainicio')}}">
@@ -542,7 +542,7 @@
             'autoWidth': true
         });
         $('#Articulos').DataTable({
-            'paging': true,
+            'paging': false,
             'lengthChange': true,
             'searching': true,
             'ordering': false,

@@ -8,4 +8,5 @@ class empresas extends Model
 {
     //
     protected $primaryKey = 'idempresa';
+    protected $table='empresas';
 }

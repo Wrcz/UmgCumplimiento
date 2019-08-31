@@ -78,17 +78,19 @@ Route::put('/sanciones/consultar/{id}', 'SancionesController@actualizarsancion')
 Route::post('/sanciones/agregar/{id}', 'SancionesController@agregarsancion')->name('Regulaciones.agregarsancion');
 //fin Rutas para regulaciones
 
-Route::get('/Prueba/{nombre?}', 'PageControler@Prueba')->name('Prueba');
 
-Route::get('/detalle/{id}', 'PageControler@detalle')->name('Usuario.detalle');
+//Gestion de Cumplimiento
+Route::get('/cumplimiento/', 'CumplimientoController@cumplimiento')->name('Cumplimiento.cumplimiento');
 
-Route::get('/editar/{id}', 'PageControler@editar')->name('Usuario.editar');
+Route::post('/cumplimiento/fetch', 'CumplimientoController@cumplimientofetch')->name('Cumplimiento.cumplimientofetch');
 
-Route::put('/editar/{id}', 'PageControler@update')->name('Usuario.update');
+Route::get('/cumplimiento/regulacion/{id}/{reg}', 'CumplimientoController@cumplimientoregulacion')->name('Cumplimiento.cumplimientoregulacion');
 
-Route::DELETE('/eliminar/{id}', 'PageControler@eliminar')->name('Usuario.eliminar');
+Route::delete('/evidencia/eliminar/{id}', 'EvidenciaController@eliminar')->name('Evidencia.eliminar');
 
-Route::post('/crear/', 'PageControler@crear')->name('Usuario.crear');
+Route::post('/evidencia/agregar', 'EvidenciaController@agregar')->name('Evidencia.agregar');
+//Fin de Gestion de Regulaciones
+
 
 //Auth::routes();
 
