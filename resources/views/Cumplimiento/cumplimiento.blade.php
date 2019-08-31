@@ -77,7 +77,8 @@
                             {{ csrf_field() }}
                             <br>
                             <p>
-                                <a class="btn btn-primary btn-lg"  href="{{route('Cumplimiento.cumplimientoregulacion',['emp'=>1,'regu'=>2])}}">Consultar</a>
+                                <button class="btn btn-primary btn-lg" name="consultar" id="consultar"  >Consultar </button>
+                                <a  href="{{route('Cumplimiento.cumplimientoregulacion',['emp'=>1,'regu'=>2])}}">Consultar</a>
                             </p>
                       
                         </div>
@@ -124,7 +125,16 @@ $('#empresas').change(function(){
         
         }
         });
-       
+
+    $('#consultar').click(function(){
+             
+       emp = $('#empresas').val();
+        regu=$('#regulaciones').val();
+        var _token = $('input[name="_token"]').val();
+ 
+        window.location.href = "<?php echo URL::to('/cumplimiento/regulacion/"+emp+"/"+regu+"'); ?>";
+                
+        });   
  }); 
 
 

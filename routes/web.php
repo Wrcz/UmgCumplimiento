@@ -84,7 +84,7 @@ Route::get('/cumplimiento/', 'CumplimientoController@cumplimiento')->name('Cumpl
 
 Route::post('/cumplimiento/fetch', 'CumplimientoController@cumplimientofetch')->name('Cumplimiento.cumplimientofetch');
 
-Route::get('/cumplimiento/regulacion/{id}/{reg}', 'CumplimientoController@cumplimientoregulacion')->name('Cumplimiento.cumplimientoregulacion');
+Route::get('/cumplimiento/regulacion/{id}/{regu}', 'CumplimientoController@cumplimientoregulacion')->name('Cumplimiento.cumplimientoregulacion');
 
 Route::delete('/evidencia/eliminar/{id}', 'EvidenciaController@eliminar')->name('Evidencia.eliminar');
 

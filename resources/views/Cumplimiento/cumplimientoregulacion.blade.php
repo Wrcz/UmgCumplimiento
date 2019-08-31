@@ -147,24 +147,30 @@
                                                                               <thead>
                                                                                   <th style="width: 40%;">Nombre</th>
                                                                                   <th style="width: 40%;">Observaciones</th>
-                                                                                  <th style="width: 10%;">FechaCargada</th>
+                                                                                  <th style="width: 5%;">FechaCargada</th>
                                                                                   <th style="width: 10%;"></th>
+                                                                                  <th style="width: 5%;"></th>
                                                                               </thead>
                                                                               <tbody>
                                                                                     @foreach ($Evidencias as $Evidencia)
-                                                                                  <tr >
-                                                                                      <td >{{$Evidencia->nombreevidencia}}</td>
-                                                                                      <td>{{$Evidencia->observacionevidencia}}</td>
-                                                                                      <td>{{$Evidencia->fechacargada}}</td>
-                                                                                      <td>
-                                                                                      <form name="eliminarevidencia" action="{{route('Evidencia.eliminar',$Evidencia->idevidenciacumplimiento)}}"
-                                                                                        method="POST" >
-                                                                                        @method('DELETE')
-                                                                                        @csrf
-                                                                                        <button class="btn btn-danger btn-xs" type="submit">Eliminar</button>
-                                                                                      </form>
-                                                                                     </td>
-                                                                                  </tr>
+                                                                                        @if ($Evidencia->idarticulo==$row->idarticulo)
+                                                                                            <tr >
+                                                                                                <td >{{$Evidencia->nombreevidencia}}</td>
+                                                                                                <td>{{$Evidencia->observacionevidencia}}</td>
+                                                                                                <td>{{$Evidencia->fechacargada}}</td>
+                                                                                                <td>
+                                                                                                <form name="eliminarevidencia" action="{{route('Evidencia.eliminar',$Evidencia->idevidenciacumplimiento)}}"
+                                                                                                    method="POST" >
+                                                                                                    @method('DELETE')
+                                                                                                    @csrf
+                                                                                                    <button class="btn btn-danger btn-xs" name="eliminarevidencia" onclick="eliminarev({{$Evidencia->idevidenciacumplimiento}});"  type="submit">Eliminar</button>
+                                                                                                </form>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <a href="{{url('/evidencias/'.$Evidencia->documentoevidencia)}}" target="_blank">Ver</a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endif
                                                                                   @endforeach
                                                                               </tbody>
                                                                           </table>
@@ -177,17 +183,27 @@
                                                                                    
                                                                                 </div>
                                                                                 <div class="box-body">
-                                                                                        <input type="file" name="archivo" style=" font-size: 13px;">
+                                                                                        <form method="POST" action="{{route('Evidencia.agregar')}}" enctype="multipart/form-data">
+                                                                                      
+                                                                                        {{ csrf_field() }}
+                                                                                        <!-- MAX_FILE_SIZE must precede the file input field -->
+                                                                                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                                                                                        <input name="archivo" type="file" style=" font-size: 13px;" required />
+                                                                                        
+                                                                                        <input type="hidden" name="cumplimiento" class="form-control input-ls" type="text" placeholder="Nombre Evidencia"
+                                                                                        value="{{$row->idcumplimientoempresa}}" style="width: 100%; font-size: 12px;">
                                                                                         <br>
-                                                                                    <input name="nombrearchivo" class="form-control input-ls" type="text" placeholder="Nombre Evidencia"
-                                                                                        value="{{old('nombrearchivo')}}" style="width: 100%; font-size: 12px;">
-                                                                                    <br><br>
-                                                                                    <textarea name="observacionarchivo" type="text" class="textarea" placeholder="Descripcion"
+                                                                                        <input name="nombre" class="form-control input-ls" type="text" placeholder="Nombre Evidencia"
+                                                                                        value="{{old('nombre')}}" style="width: 100%; font-size: 12px;">
+                                                                                        <br><br>
+                                                                                        <textarea name="observacionarchivo" type="text" class="textarea" placeholder="Descripcion"
                                                                                         value="{{old('descripcion')}}"
                                                                                         style="width: 100%; height: 100px; font-size: 12px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                                                                         <br><br>
-                                                                                        <button class="btn btn-warning btn-ls pull-right"  onclick="AgregaEv()"   name="agregarevidencia" >Guardar Evidencia</button>   
-                                                                                </div>
+
+                                                                                        <button class="btn btn-warning btn-ls pull-right"  type="submit"    >Guardar Evidencia</button>   
+                                                                                     </form>
+                                                                                    </div>
                                                                                  
                                                                             </div>
                                                                        
@@ -429,16 +445,27 @@ headers: {
 
 
       
-function AgregaEv()
+function AgregaEv(cumplimiento)
 {
     //e.preventDefault();
 
 var archivo = $("input[name=archivo]").val();
-var nombre = $("input[name=nombrearchivo]").val();
-var observaciones = $("textarea[name=observacionarchivo]").val();
-var cumplimiento = 22;
-var _token = $('input[name="_token"]').val();
+var nombre = $("input[name=nombrearchivo]").val().trim();
+var observaciones = $("textarea[name=observacionarchivo]").val().trim();
 
+if (archivo.length==0)
+    {
+        alert('Seleccione Archivo a cargar.');
+        return;
+    }
+
+    if (nombre.length==0 || observaciones.length==0)
+    {
+        alert('Ingrese un nombre y descripcion para el archivo.');
+        return;
+    }
+
+var _token = $('input[name="_token"]').val();
 $.ajax({
         url:"{{route('Evidencia.agregar')}}",
         method:"POST",
@@ -446,8 +473,8 @@ $.ajax({
        
         success:function(result)
         {
-            alert('Evidencia guardada');
-            $('#agregarevidencia').html(result);
+            alert('Evidencia guardada con éxito.');
+            
         },
         error: function (result, status, err) {
        alert('Error' . result.responseText);

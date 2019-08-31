@@ -27,28 +27,44 @@ class EvidenciaController extends Controller
    public function agregar(Request $request)
    {
        try {
-        
-          $archivo = $request->get('archivo');
-           $nombre = $request->get('nombre');
-           $observaciones = $request->get('observaciones');
-           $cumplimientoevidencia = $request->get('cumplimiento');
+        $patharchivo="";
+     
+            if ($request->hasfile('archivo') )
+            {
+                $archivo = $request->file('archivo');
+
            
-            $date = Carbon::now()->toDateTimeString();
+                $patharchivo=time().$archivo->getClientOriginalName();
+               
+                $archivo->move(public_path().'/evidencias',$patharchivo);
+            }
+        
+           
+           $nombre = $request->get('nombre');
+           $observaciones = $request->get('observacionarchivo');
+           $cumplimientoevidencia = $request->get('cumplimiento');
+           $date = Carbon::now()->toDateTimeString();
  
             $Evidencia=new App\evidencia;
             $Evidencia->idcumplimientoempresa=$cumplimientoevidencia;
             $Evidencia->nombreevidencia=$nombre;
-            $Evidencia->documentoevidencia=null;
+            $Evidencia->documentoevidencia=$patharchivo;
             $Evidencia->observacionevidencia=$observaciones;
             $Evidencia->fechacargada=$date;
            
             $Evidencia->save();
-        
+
+            return back()->with('mensaje', 'Evidencia Agregada correctamente!');
        } catch (\Illuminate\Database\QueryException $e) {
            dd($e);
            return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
        } catch (PDOException $e) {
+        dd($e);
            return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
        }
+     catch (Exception $e) {
+         dd($e);
+        return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
+    }
    }
 }

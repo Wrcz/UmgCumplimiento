@@ -53,6 +53,10 @@ class CumplimientoController extends Controller
     public function cumplimientoregulacion($emp,$regu)
     {
         try {
+
+           /* $emp=$request->get('emp');
+            $regu=$request->get('regu');
+            */
             DB::beginTransaction();
 
             $ValoresCumplimiento =Db::statement('INSERT INTO cumplimiento_articulo (idregulacionempresa,idarticulo,observacionescumplimiento,fechacumplimiento,estadocumplimiento) 
