@@ -89,7 +89,8 @@ Route::get('/cumplimiento/regulacion/{id}/{regu}', 'CumplimientoController@cumpl
 Route::delete('/evidencia/eliminar/{id}', 'EvidenciaController@eliminar')->name('Evidencia.eliminar');
 
 Route::post('/evidencia/agregar', 'EvidenciaController@agregar')->name('Evidencia.agregar');
-//Fin de Gestion de Regulaciones
+
+Route::post('/cumplimiento/actualizar/{id}/{reg}/{art}', 'CumplimientoController@actualizarcumplimiento')->name('Cumplimiento.actualizarcumplimiento');
 
 
 //Auth::routes();

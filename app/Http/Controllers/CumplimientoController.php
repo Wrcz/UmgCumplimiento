@@ -101,4 +101,29 @@ class CumplimientoController extends Controller
             return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
         }
     }
+
+    public function actualizarcumplimiento(Request $request, $idcumplimiento, $idreg, $idart)
+    {
+        try {
+           
+            $request->validate([
+                      'estadoarticulo'=>'required',
+                      'fechacumplimiento'=>'required',
+                      'observacionescumplimiento'=>'required'
+                      ]);
+            
+                      
+            $Cumplimiento = DB::table('cumplimiento_articulo')
+            ->where(['idcumplimientoempresa'=> $idcumplimiento,'idregulacionempresa'=>$idreg,'idarticulo'=>$idart])
+            ->update(['observacionescumplimiento' => $request->observacionescumplimiento,'fechacumplimiento'=>$request->fechacumplimiento,'estadocumplimiento'=>$request->estadoarticulo]);
+                  
+            return back()->with('mensaje', 'Cumplimiento actualizado.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            dd($e);
+            return back()->with('mensajeerror', 'Ocurrio un error al guardar los cambios.'. $e);
+        } catch (PDOException $e) {
+            dd($e);
+            return back()->with('mensajeerror', 'currio un error al guardar los cambios.');
+        }
+    }
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Factory;
+use Illuminate\Validation\Validator;
 use Illuminate\Http\Request;
 use App;
 use Carbon\Carbon;
@@ -26,16 +29,31 @@ class EvidenciaController extends Controller
    //Metodo para obtener empresaas
    public function agregar(Request $request)
    {
+       /*
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|max:3145730', // 3GB
+                'nombre' => 'required|numeric'
+            ]);
+        */
+    
        try {
+        
+
+       // dd($request->hasfile('archivo'));
+        //dd(phpinfo()); 
+
+       // $path = Storage::putFile('archivo', $request->file('archivo'));
+        //$disk = Storage::disk('local');
+      //  $disk->put('prueba.pdf', fopen($request->get('archivo'), 'r+'));
+
+        //dd($disk);
         $patharchivo="";
      
+        
             if ($request->hasfile('archivo') )
             {
                 $archivo = $request->file('archivo');
-
-           
                 $patharchivo=time().$archivo->getClientOriginalName();
-               
                 $archivo->move(public_path().'/evidencias',$patharchivo);
             }
         
@@ -66,5 +84,10 @@ class EvidenciaController extends Controller
          dd($e);
         return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
     }
+    catch (PostTooLargeException $e){
+        dd($e);
+        return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
+    }
+
    }
 }

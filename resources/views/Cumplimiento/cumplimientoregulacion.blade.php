@@ -290,50 +290,62 @@
                                                                             
                                                                             </thead>
                                                                             <tbody>
+                                                                                   <!--Form actualizar cumplimiento-->
+                                                                                    <form method="POST" action="{{route('Cumplimiento.actualizarcumplimiento',['idcumplimiento'=>$row->idcumplimientoempresa,'idreg'=>$row->idregulacionempresa,'idart'=>$row->idarticulo] )}}" >
+                                                                                            {{ csrf_field() }}          
                                                                                 <tr>
-                                                                                    <td>
-                                                                                <label style="font-style: bold; font-size:0.875em;">Estado Cumplimiento</label>
-                                                                                    <select name="estadoarticulo" class="form-control select2 input-sm" style="width: 100%;" value=" 
-                                                                                                                    <?php switch($row->estadocumplimiento)
-                                                                                                                    { 
-                                                                                                                        case 0 :
-                                                                                                                            echo '0';
-                                                                                                                            break;
-                                                                                                                        case 1 :
-                                                                                                                            echo '1';
-                                                                                                                            break;
-                                                                                                                        case 2 :
-                                                                                                                            echo '2';
-                                                                                                                            break;
-                                                                                                                        }
-                                                                                                                    ?>      
-                                                                                                                    ">
-                                                                    
-                                                                                        <option @if ($row->estadocumplimiento==0) Selected @endif
-                                                                                            value="true">No Cumple
-                                                                                        </option>
-                                                                                        <option @if ($row->estadocumplimiento==1) Selected @endif
-                                                                                            value="false"> Cumple
-                                                                                        </option>
-                                                                                        <option @if ($row->estadocumplimiento==2) Selected @endif
-                                                                                            value="false"> No aplica
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    
-                                            
-                                                                                    <label style="font-style: bold; font-size:0.875em;">Fecha Cumplimiento</label>
-                                                                                        <input name="fechafin" type="date" class="form-control select2 input-sm" style="width: 100%;"
-                                                                                            value="{{$row->fechacumplimiento}}">
-                                                                                    </td>
-                                                                                    
-                                                                                    <td style="padding:.75em .5em;">
-                                                                                            <label style="font-style: bold; font-size:0.875em;">Observaciones</label>
-                                                                                        <textarea name="observaciones" type="text" class="textarea"  value="{{$row->observacionescumplimiento}}"
-                                                                                                style="width: 100%; height: 87px; font-size: 11px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$row->observacionescumplimiento}}</textarea>
-                                                        
-                                                                                    </td>
-                                                                            
+                                                                                                 <td>
+                                                                                             
+                                                                                             <label style="font-style: bold; font-size:0.875em;">Estado Cumplimiento</label>
+                                                                                                 <select name="estadoarticulo" class="form-control select2 input-sm" style="width: 100%;" value=" 
+                                                                                                                                 <?php switch($row->estadocumplimiento)
+                                                                                                                                 { 
+                                                                                                                                     case 0 :
+                                                                                                                                         echo '0';
+                                                                                                                                         break;
+                                                                                                                                     case 1 :
+                                                                                                                                         echo '1';
+                                                                                                                                         break;
+                                                                                                                                     case 2 :
+                                                                                                                                         echo '2';
+                                                                                                                                         break;
+                                                                                                                                     }
+                                                                                                                                 ?>      
+                                                                                                                                 ">
+                                                                                 
+                                                                                                     <option @if ($row->estadocumplimiento==0) Selected @endif
+                                                                                                         value="0">No Cumple
+                                                                                                     </option>
+                                                                                                     <option @if ($row->estadocumplimiento==1) Selected @endif
+                                                                                                         value="1"> Cumple
+                                                                                                     </option>
+                                                                                                     <option @if ($row->estadocumplimiento==2) Selected @endif
+                                                                                                         value="2"> No aplica
+                                                                                                     </option>
+                                                                                                 </select>
+                                                                                              
+                                                                                                 <label style="font-style: bold; font-size:0.875em;">Fecha Cumplimiento</label>
+                                                                                                     <input name="fechacumplimiento" type="date" class="form-control select2 input-sm" style="width: 100%;"
+                                                                                                         value="{{$row->fechacumplimiento}}">
+                                                                                                         <br>
+                                                                                                        
+                                                                                                 </td>
+                                                                                                 
+                                                                                                 <td style="padding:.75em .5em;">
+                                                                                                        <label style="font-style: bold; font-size:0.875em;">Observaciones</label>
+
+                                                                                                        <button class="btn btn-warning btn-xs"  style="float: right;" type="submit">Guardar Cambios</button> 
+                                                                                                        
+                                                                                                     <textarea name="observacionescumplimiento" type="text" class="textarea"  value="{{$row->observacionescumplimiento}}"
+                                                                                                             style="width: 100%; height: 87px; font-size: 11px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$row->observacionescumplimiento}}</textarea>
+                                                                                                             <br>
+                                                                                                            
+                                                                                                 </td>
+                                                                                            
+                                                                                           <!--Form actualizar cumplimiento-->
+
                                                                                 </tr>
+                                                                                    </form>
                                                                             <tbody>
                                                                         </table>
 
