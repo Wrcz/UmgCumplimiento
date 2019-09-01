@@ -42,7 +42,7 @@
          <li class="dropdown user user-menu">
            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
              <img src="{{asset("assets/lte/dist/img/avatar6.png")}}"  class="user-image" alt="User Image">
-             <span class="hidden-xs">Nombre Usuario</span>
+             <span class="hidden-xs"> {{auth()->user()->nombreusuario}}  </span>
            </a>
            <ul class="dropdown-menu">
              <!-- User image -->
@@ -50,14 +50,14 @@
                <img src="{{asset("assets/lte/dist/img/avatar6.png")}}" class="img-circle" alt="User Image">
 
                <p>
-                 Nombre Usuario              
+                {{auth()->user()->nombreusuario}}              
                </p>
              </li>
             
              <!-- Menu Footer-->
              <li class="user-footer">
                   <div class="pull-right">
-                 <a href="#" class="btn btn-default btn-flat">Cerrar Sesión</a>
+                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Cerrar Sesión</a>
                </div>
              </li>
            </ul>

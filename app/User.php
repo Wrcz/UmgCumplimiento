@@ -15,8 +15,10 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table = 'usuarios';
+    protected $primaryKey = "idusuario";
     protected $fillable = [
-        'name', 'email', 'password',
+        'idusuario','nombreusuario','correoelectronico',  'password','idnivelusuario',
     ];
 
     /**
@@ -36,4 +38,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
+
+    public function getAuthIdentifier()
+	{
+		return $this->getKey();
+	}
 }

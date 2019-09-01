@@ -11,12 +11,26 @@
 |
 */
 
-//Route::get('/', 'PageControler@inicio');
 
+Route::get('/bienvenido/', 'PageControler@inicio')->name('bienvenido');
+Route::get('/', 'PageControler@inicio')->name('bienvenido');
+
+/*
 Route::get('/', function () {
     return view('bienvenido');
 })->name('bienvenido');
+*/
 
+//usuarios
+// Authentication Routes...
+route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+route::post('login', 'Auth\LoginController@login');
+route::get('logout', 'Auth\LoginController@logout')->name('logout');
+/*
+Route::group(['middleware' => 'lang:es'], function () {
+    Route::get('login', 'LoginController@login');
+});
+*/
 
 //Rutas para Empresas
 Route::get('/empresas', 'EmpresasController@empresas')->name('Empresas.empresas');

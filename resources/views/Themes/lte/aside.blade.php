@@ -8,7 +8,7 @@
          <img src="{{asset("assets/lte/dist/img/avatar6.png")}}" class="img-circle" alt="User Image">
        </div>
        <div class="pull-left info">
-         <p>Nombre Usuario</p>
+         <p> {{auth()->user()->nombreusuario}}  </p>
          <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
         
        </div>
@@ -27,6 +27,8 @@
      <!-- sidebar menu: : style can be found in sidebar.less -->
      <ul class="sidebar-menu" data-widget="tree">
        <li class="header">MENU PRINCIPAL</li>
+
+      
        <li class="treeview">
          <a href="#">
            <i class="fa fa-dashboard"></i> <span>Configuración</span>
@@ -35,11 +37,19 @@
            </span>
          </a>
          <ul class="treeview-menu">
-           <li><a href="{{route('Usuarios.usuarios')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+            @if ( auth()->user()->idnivelusuario==1  )
+               <li><a href="{{route('Usuarios.usuarios')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+           @endif
+           @if ( auth()->user()->idnivelusuario==1  || auth()->user()->idnivelusuario==2  )
            <li><a href="{{route('Empresas.empresas')}}"><i class="fa fa-circle-o"></i> Empresas</a></li>
+           @endif
+           @if ( auth()->user()->idnivelusuario==1  || auth()->user()->idnivelusuario==2  || auth()->user()->idnivelusuario==3 )
            <li><a href="{{route('Regulaciones.regulaciones')}}"><i class="fa fa-circle-o"></i> Regulaciones</a></li>
+           @endif
          </ul>
        </li>
+      
+
        <li class="treeview">
          <a href="#">
            <i class="fa fa-pie-chart"></i>
@@ -49,7 +59,9 @@
            </span>
          </a>
          <ul class="treeview-menu">
+            @if ( auth()->user()->idnivelusuario==1  || auth()->user()->idnivelusuario==2 || auth()->user()->idnivelusuario==3 )
            <li><a href="{{route('Cumplimiento.cumplimiento')}}"><i class="fa fa-circle-o"></i> Gestión de Cumplimiento</a></li>
+            @endif
                    </ul>
        </li>
        <li class="treeview">
@@ -61,8 +73,10 @@
            </span>
          </a>
          <ul class="treeview-menu">
+            @if ( auth()->user()->idnivelusuario==1  || auth()->user()->idnivelusuario==2 || auth()->user()->idnivelusuario==3  || auth()->user()->idnivelusuario==4)
            <li><a href="#"><i class="fa fa-circle-o"></i> Cumplimiento</a></li>
            <li><a href="#"><i class="fa fa-circle-o"></i> Regulaciones</a></li>
+           @endif
         </ul>
        </li>
            
