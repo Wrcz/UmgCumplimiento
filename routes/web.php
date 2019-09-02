@@ -107,6 +107,10 @@ Route::post('/evidencia/agregar', 'EvidenciaController@agregar')->name('Evidenci
 Route::post('/cumplimiento/actualizar/{id}/{reg}/{art}', 'CumplimientoController@actualizarcumplimiento')->name('Cumplimiento.actualizarcumplimiento');
 
 
+Route::get('/seguimiento/', 'InformeController@informeparametros')->name('Informe.parametroinforme');
+
+Route::get('/seguimiento/regulacion/{id}/{regu}', 'InformeController@informeregulacion')->name('Informe.informe');
+
 //Auth::routes();
 
 //Auth::routes(['register' => false]);

@@ -74,8 +74,9 @@
          </a>
          <ul class="treeview-menu">
             @if ( auth()->user()->idnivelusuario==1  || auth()->user()->idnivelusuario==2 || auth()->user()->idnivelusuario==3  || auth()->user()->idnivelusuario==4)
-           <li><a href="#"><i class="fa fa-circle-o"></i> Cumplimiento</a></li>
-           <li><a href="#"><i class="fa fa-circle-o"></i> Regulaciones</a></li>
+            
+            <li><a href="{{route('Informe.parametroinforme')}}"><i class="fa fa-circle-o"></i> Cumplimiento</a></li>
+          
            @endif
         </ul>
        </li>

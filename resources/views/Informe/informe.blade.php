@@ -6,13 +6,13 @@
 
 @section('titulo')
 <section class="content-header">
-    <h1> Gestión de Cumplimiento
-        <small>Mantenimiento </small>
+    <h1> Informe de Cumplimiento
+        <small>Seguimiento </small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route("bienvenido")}}/"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li><a href="{{route('Cumplimiento.cumplimiento')}}">Gestion de Cumplimiento</a></li>
-        <li><a href="">Manteinimiento de Cumplimiento</a></li>
+        <li><a href="{{route('Cumplimiento.cumplimiento')}}">Parametros de Reporte</a></li>
+        <li><a href="">Informe de Cumplimiento</a></li>
     </ol>
 </section>
 
@@ -20,7 +20,7 @@
     <div class="box-body">
         <div class="alert alert-info alert-dismissible">
             <h4><i class="icon fa fa-info"></i> Información</h4>
-            Esta página le permite gestionar el cumplimiento de las regulaciones para su empresa.
+            Esta página le permite dar seguimiento al cumplimiento de las regulaciones para su empresa.
         </div>
 
 
@@ -170,7 +170,7 @@
                                                                                   <th style="width: 40%;">Observaciones</th>
                                                                                   <th style="width: 5%;">FechaCargada</th>
                                                                                   <th style="width: 10%;"></th>
-                                                                                  <th style="width: 5%;"></th>
+                                                                                
                                                                               </thead>
                                                                               <tbody>
                                                                                     @foreach ($Evidencias as $Evidencia)
@@ -179,14 +179,7 @@
                                                                                                 <td >{{$Evidencia->nombreevidencia}}</td>
                                                                                                 <td>{{$Evidencia->observacionevidencia}}</td>
                                                                                                 <td>{{$Evidencia->fechacargada}}</td>
-                                                                                                <td>
-                                                                                                <form name="eliminarevidencia" action="{{route('Evidencia.eliminar',$Evidencia->idevidenciacumplimiento)}}"
-                                                                                                    method="POST" >
-                                                                                                    @method('DELETE')
-                                                                                                    @csrf
-                                                                                                    <button class="btn btn-danger btn-xs" name="eliminarevidencia" onclick="eliminarev({{$Evidencia->idevidenciacumplimiento}});"  type="submit">Eliminar</button>
-                                                                                                </form>
-                                                                                                </td>
+                                                                                           
                                                                                                 <td>
                                                                                                     <a href="{{url('/evidencias/'.$Evidencia->documentoevidencia)}}" target="_blank">Ver</a>
                                                                                                 </td>
@@ -197,37 +190,7 @@
                                                                           </table>
                                                                           <br>
                                                                       
-                                                                      
-                                                                            <div class="box box-success">
-                                                                                <div class="box-header with-border inline">
-                                                                                    <h3 class="box-title">Agregar Evidencia</h3>
-                                                                                   
-                                                                                </div>
-                                                                                <div class="box-body">
-                                                                                        <form method="POST" action="{{route('Evidencia.agregar')}}" enctype="multipart/form-data">
-                                                                                      
-                                                                                        {{ csrf_field() }}
-                                                                                        <!-- MAX_FILE_SIZE must precede the file input field -->
-                                                                                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                                                                                        <input name="archivo" type="file" style=" font-size: 13px;" required />
-                                                                                        
-                                                                                        <input type="hidden" name="cumplimiento" class="form-control input-ls" type="text" placeholder="Nombre Evidencia"
-                                                                                        value="{{$row->idcumplimientoempresa}}" style="width: 100%; font-size: 12px;">
-                                                                                        <br>
-                                                                                        <input name="nombre" class="form-control input-ls" type="text" placeholder="Nombre Evidencia"
-                                                                                        value="{{old('nombre')}}" style="width: 100%; font-size: 12px;">
-                                                                                        <br><br>
-                                                                                        <textarea name="observacionarchivo" type="text" class="textarea" placeholder="Descripcion"
-                                                                                        value="{{old('descripcion')}}"
-                                                                                        style="width: 100%; height: 100px; font-size: 12px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                                                                        <br><br>
-
-                                                                                        <button class="btn btn-warning btn-ls pull-right"  type="submit"    >Guardar Evidencia</button>   
-                                                                                     </form>
-                                                                                    </div>
-                                                                                 
-                                                                            </div>
-                                                                       
+                                                                                                                                             
                                                                     </div>
                                                                   
                                                                   </div>
@@ -341,13 +304,12 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                    <!--Form actualizar cumplimiento-->
-                                                                                    <form method="POST" action="{{route('Cumplimiento.actualizarcumplimiento',['idcumplimiento'=>$row->idcumplimientoempresa,'idreg'=>$row->idregulacionempresa,'idart'=>$row->idarticulo] )}}" >
-                                                                                            {{ csrf_field() }}          
+                                                                                            
                                                                                 <tr>
                                                                                                  <td>
                                                                                              
                                                                                              <label style="font-style: bold; font-size:0.875em;">Estado Cumplimiento</label>
-                                                                                                 <select name="estadoarticulo" class="form-control select2 input-sm" style="width: 100%;" value=" 
+                                                                                                 <select name="estadoarticulo" class="form-control select2 input-sm" style="width: 100%;" disabled value="  
                                                                                                                                  <?php switch($row->estadocumplimiento)
                                                                                                                                  { 
                                                                                                                                      case 0 :
@@ -381,7 +343,7 @@
                                                                                                  </select>
 
                                                                                                  <label style="font-style: bold; font-size:0.875em;">Nivel Madurez Cobit 5</label>
-                                                                                                 <select name="nivelmadurez" class="form-control select2 input-sm" style="width: 100%;" value=" 
+                                                                                                 <select name="nivelmadurez" class="form-control select2 input-sm" style="width: 100%;" disabled value=" 
                                                                                                         <?php switch($row->nivelmadurez)
                                                                                                         { 
                                                                                                             case 0 :
@@ -418,7 +380,7 @@
                                                                                             </select>
                                                                                                 <br>
                                                                                                 <label style="font-style: bold; font-size:0.875em;">Fecha Cumplimiento</label>
-                                                                                                <input name="fechacumplimiento" type="date" class="form-control select2 input-sm" style="width: 100%;"
+                                                                                                <input name="fechacumplimiento" type="date" class="form-control select2 input-sm" style="width: 100%;" readonly
                                                                                                     value="{{$row->fechacumplimiento}}">
                                                                                                   
                                                                                           
@@ -429,9 +391,8 @@
                                                                                                   
                                                                                                         <label style="font-style: bold; font-size:0.875em;">Observaciones</label>
 
-                                                                                                        <button class="btn btn-warning btn-xs"  style="float: right;" type="submit">Guardar Cambios</button> 
-                                                                                                        
-                                                                                                     <textarea name="observacionescumplimiento" type="text" class="textarea"  value="{{$row->observacionescumplimiento}}"
+                                                                                                     
+                                                                                                     <textarea name="observacionescumplimiento" type="text" class="textarea"  value="{{$row->observacionescumplimiento}}" readonly
                                                                                                              style="width: 100%; height: 133px; font-size: 11px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$row->observacionescumplimiento}}</textarea>
                                                                                                              <br>
                                                                                                             
@@ -440,7 +401,7 @@
                                                                                            <!--Form actualizar cumplimiento-->
 
                                                                                 </tr>
-                                                                                    </form>
+                                                                                    
                                                                             <tbody>
                                                                         </table>
 

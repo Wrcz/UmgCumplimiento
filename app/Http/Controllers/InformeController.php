@@ -6,17 +6,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App;
 
-class CumplimientoController extends Controller
+class InformeController extends Controller
 {
     //
 
-    //Metodo para obtener empresaas
-    public function cumplimiento()
+    public function index()
+    {
+        return view('Informe.parametroinforme');
+    }
+
+    public function informeparametros()
     {
         try {
             $Empresas =Db::select('SELECT e.idempresa,e.nombreempresa FROM empresas e INNER JOIN usuarios_empresas ue ON e.idempresa=ue.idempresa WHERE ue.idusuario=? order by e.idempresa', [1]);
  
-            return view('Cumplimiento.cumplimiento')->with('Empresas', $Empresas);
+            return view('Informe.parametroinforme')->with('Empresas', $Empresas);
         } catch (\Illuminate\Database\QueryException $e) {
             report($e);
             return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
@@ -26,33 +30,7 @@ class CumplimientoController extends Controller
     }
 
 
-    
-    //Metodo para obtener empresaas
-    public function cumplimientofetch(Request $request)
-    {
-        try {
-            $select = $request->get('select');
-            $value = $request->get('value');
-            $dependent = $request->get('dependent');
-            $data = DB::select('SELECT r.idregulacion,r.identificacion + char(32) +r.nombreregulacion nombreregulacion FROM regulacion_empresa re INNER JOIN regulacion r ON re.idregulacion=r.idregulacion WHERE re.idempresa=?', [$value]);
-       
-            $output = '<option value="">Seleccione Regulacion</option>';
-            
-            foreach ($data as $key => $row) {
-                $output .=  '<option value="'.$row->idregulacion.'">'.$row->nombreregulacion.'</option>';
-            }
-           
-            echo($output);
-        } catch (\Illuminate\Database\QueryException $e) {
-            dd($e);
-            return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
-        } catch (PDOException $e) {
-            return back()->with('mensajeerror', 'Ocurrio un error al obtener los datos.');
-        }
-    }
-
-
-    public function cumplimientoregulacion($emp,$regu)
+    public function informeregulacion($emp,$regu)
     {
         try {
 
@@ -94,7 +72,7 @@ class CumplimientoController extends Controller
 
         DB::commit();
 
-            return view('Cumplimiento.cumplimientoregulacion')->with(['Cumplimiento'=> $Cumplimiento,'Regulacion'=>$Regulacion,'Empresa'=>$Empresa,'Evidencias'=>$Evidencias]);
+            return view('Informe.informe')->with(['Cumplimiento'=> $Cumplimiento,'Regulacion'=>$Regulacion,'Empresa'=>$Empresa,'Evidencias'=>$Evidencias]);
         } catch (\Illuminate\Database\QueryException $e) {
             DB::rollBack();
             dd($e);
@@ -104,33 +82,4 @@ class CumplimientoController extends Controller
         }
     }
 
-    public function actualizarcumplimiento(Request $request, $idcumplimiento, $idreg, $idart)
-    {
-        try {
-           
-            $request->validate([
-                      'estadoarticulo'=>'required',
-                      'observacionescumplimiento'=>'required',
-                      'nivelmadurez'=>'required'
-                      ]);
-            
-                      
-            $Cumplimiento = DB::table('cumplimiento_articulo')
-            ->where(['idcumplimientoempresa'=> $idcumplimiento,'idregulacionempresa'=>$idreg,'idarticulo'=>$idart])
-            ->update(['observacionescumplimiento' => $request->observacionescumplimiento,
-            'fechacumplimiento'=>$request->fechacumplimiento,
-            'estadocumplimiento'=>$request->estadoarticulo,
-            'nivelmadurez'=>$request->nivelmadurez]);
-                  
-            return back()->with('mensaje', 'Cumplimiento actualizado.');
-        } catch (\Illuminate\Database\QueryException $e) {
-            dd($e);
-            return back()->with('mensajeerror', 'Ocurrio un error al guardar los cambios.'. $e);
-        } catch (PDOException $e) {
-            dd($e);
-            return back()->with('mensajeerror', 'currio un error al guardar los cambios.');
-        }
-    }
-
-   
 }

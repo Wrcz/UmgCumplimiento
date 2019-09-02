@@ -6,12 +6,12 @@
 
 @section('titulo')
 <section class="content-header">
-    <h1> Gestión de Cumplimiento
-        <small>Mantenimiento </small>
+    <h1> Seguimiento de Cumplimiento
+        <small>Informe </small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{route("bienvenido")}}/"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li><a href="{{route('Cumplimiento.cumplimiento')}}">Gestion de Cumplimiento</a></li>
+        <li><a href="{{route('Cumplimiento.cumplimiento')}}">Generacion de Informe de Cumplimiento</a></li>
 
     </ol>
 </section>
@@ -20,7 +20,7 @@
     <div class="box-body">
         <div class="alert alert-info alert-dismissible">
             <h4><i class="icon fa fa-info"></i> Información</h4>
-            Esta página le permite gestionar el cumplimiento de las regulaciones para su empresa.
+            Esta página le permite dar seguimiento al cumplimiento de la empresa.
         </div>
 
 
@@ -77,7 +77,7 @@
                             {{ csrf_field() }}
                             <br>
                             <p>
-                                <button class="btn btn-primary btn-lg" name="consultar" id="consultar">Gestionar </button>
+                                <button class="btn btn-primary btn-lg" name="consultar" id="consultar"  >Generar Reporte </button>
                             </p>
                       
                         </div>
@@ -131,7 +131,7 @@ $('#empresas').change(function(){
         regu=$('#regulaciones').val();
         var _token = $('input[name="_token"]').val();
  
-        window.location.href = "<?php echo URL::to('/cumplimiento/regulacion/"+emp+"/"+regu+"'); ?>";
+        window.location.href = "<?php echo URL::to('/seguimiento/regulacion/"+emp+"/"+regu+"'); ?>";
                 
         });   
  }); 
