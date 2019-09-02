@@ -78,7 +78,7 @@
                             <br>
                             <p>
                                 <button class="btn btn-primary btn-lg" name="consultar" id="consultar"  >Consultar </button>
-                                <a  href="{{route('Cumplimiento.cumplimientoregulacion',['emp'=>1,'regu'=>2])}}">Consultar</a>
+                                
                             </p>
                       
                         </div>

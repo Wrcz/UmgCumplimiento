@@ -59,15 +59,15 @@ class CumplimientoController extends Controller
             */
             DB::beginTransaction();
 
-            $ValoresCumplimiento =Db::statement('INSERT INTO cumplimiento_articulo (idregulacionempresa,idarticulo,observacionescumplimiento,fechacumplimiento,estadocumplimiento) 
-            (SELECT re.idregulacionempresa,ra.idarticulo,NULL observaciones,NULL fechacumplimiento,0 estadocumplimiento FROM regulacion_empresa re  INNER JOIN regulacion_articulo ra ON re.idregulacion=ra.idregulacion 
+            $ValoresCumplimiento =Db::statement('INSERT INTO cumplimiento_articulo (idregulacionempresa,idarticulo,observacionescumplimiento,fechacumplimiento,estadocumplimiento,nivelmadurez) 
+            (SELECT re.idregulacionempresa,ra.idarticulo,NULL observaciones,NULL fechacumplimiento,0 estadocumplimiento,0 nivelmadurez FROM regulacion_empresa re  INNER JOIN regulacion_articulo ra ON re.idregulacion=ra.idregulacion 
             LEFT JOIN cumplimiento_articulo ca ON ca.idregulacionempresa=re.idregulacionempresa AND ca.idarticulo=ra.idarticulo
                 WHERE re.idempresa=? AND re.idregulacion=?  AND ca.idcumplimientoempresa IS null)',[$emp,$regu]);
         
         $Cumplimiento =Db::select('SELECT rs.idseccion,rs.noseccion, rs.tituloseccion,rs.descripcionseccion,rs.estadoseccion,ra.idarticulo,re.idregulacionempresa,
         ra.numeroarticulo,ra.ordenarticulo,ra.tituloarticulo,ra.descripcionarticulo,ra.fechainiciovigencia,ra.fechafinvigencia,ra.estadoarticulo, 
         ISNULL(ca.estadocumplimiento,0) estadocumplimiento, ca.observacionescumplimiento,ca.fechacumplimiento, ISNULL(ce.evidencias,0) evidencias,ISNULL(cec.Sanciones,0) sanciones,
-		rs1.idsancion,rs1.descripcionsancion,ca.idcumplimientoempresa,
+		rs1.idsancion,rs1.descripcionsancion,ca.idcumplimientoempresa,ca.nivelmadurez,
         ROW_NUMBER() OVER( PARTITION BY ra.idseccion,rs.noseccion ORDER BY rs.noseccion) filaseccion,
         ROW_NUMBER() OVER( PARTITION BY ra.idarticulo ORDER BY ra.idarticulo) filaarticulo
         FROM 
@@ -108,14 +108,17 @@ class CumplimientoController extends Controller
            
             $request->validate([
                       'estadoarticulo'=>'required',
-                      'fechacumplimiento'=>'required',
-                      'observacionescumplimiento'=>'required'
+                      'observacionescumplimiento'=>'required',
+                      'nivelmadurez'=>'required'
                       ]);
             
                       
             $Cumplimiento = DB::table('cumplimiento_articulo')
             ->where(['idcumplimientoempresa'=> $idcumplimiento,'idregulacionempresa'=>$idreg,'idarticulo'=>$idart])
-            ->update(['observacionescumplimiento' => $request->observacionescumplimiento,'fechacumplimiento'=>$request->fechacumplimiento,'estadocumplimiento'=>$request->estadoarticulo]);
+            ->update(['observacionescumplimiento' => $request->observacionescumplimiento,
+            'fechacumplimiento'=>$request->fechacumplimiento,
+            'estadocumplimiento'=>$request->estadoarticulo,
+            'nivelmadurez'=>$request->nivelmadurez]);
                   
             return back()->with('mensaje', 'Cumplimiento actualizado.');
         } catch (\Illuminate\Database\QueryException $e) {

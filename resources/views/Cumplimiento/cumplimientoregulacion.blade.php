@@ -44,7 +44,28 @@
             @endif
             <!-- Fin Alertas de Mensaje -->
 
-            <!-- Alertas de Mensaje -->
+            @error('observacionescumplimiento')
+              <div class="alert alert-warning alert-dismissible" role="alert">
+                Debe ingresar observaciones para guardar los cambios.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </div>
+            @enderror
+           
+            @error('estadoarticulo')
+            <div class="alert alert-warning alert-dismissible" role="alert">
+            Seleccione un estado de cumplimiento valido.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </div>
+            @enderror
+            @error('nivelmadurez')
+            <div class="alert alert-warning alert-dismissible" role="alert">
+            Seleccione un nivel de madurez valido.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </div>
+            @enderror
 
             <!-- Tabla de sanciones -->
             <div class="row">
@@ -220,7 +241,8 @@
                                                         <div class="panel box 
                                                                 <?php   if($row->estadocumplimiento==0) echo('box-danger'); 
                                                                         if($row->estadocumplimiento==1) echo('box-success');
-                                                                        if($row->estadocumplimiento==2) echo('box-primary');  ?>">
+                                                                        if($row->estadocumplimiento==2) echo('box-warning'); 
+                                                                        if($row->estadocumplimiento==3) echo('box-primary'); ?>">
                                                             <div class="box-header with-border">
                                                                 <h4 class="box-title">
                                                                         <a data-toggle="collapse" data-parent="#<?php echo 'accordion'. $row->idarticulo ?> " 
@@ -236,29 +258,55 @@
                                                                                 <label>
                                                                                     <?php  
                                                                                                                                             if($row->estadoarticulo==1) 
-                                                                                                                                            echo('<span class="label label-primary">Vigente</spam>'); 
+                                                                                                                                            echo('<span class="label label-default">Vigente</spam>'); 
                                                                                                                                             else 
-                                                                                                                                            echo('<span class="label label-warning">Inactivo</spam>');  ?>
+                                                                                                                                            echo('<span class="label label-default">Inactivo</spam>');  ?>
                                                                                 </label>
                                                                                 <label>
                                                                                     <?php switch($row->estadocumplimiento)
                                                                                                                                     
                                                                                                                                     { 
                                                                                                                                         case 0 :
-                                                                                                                                        echo '<span class="label label-danger">No Cumple</span>';
-                                                                                                                                        break;
+                                                                                                                                            echo '<span class="label label-danger">No Cumple</span>';
+                                                                                                                                            break;
                                                                                                                                         case 1 :
-                                                                                                                                        echo '<span class="label label-success">Cumple</span>';
-                                                                                                                                        break;
+                                                                                                                                            echo '<span class="label label-success">Cumple</span>';
+                                                                                                                                            break;
                                                                                                                                         case 2 :
-                                                                                                                                        echo'<span class="label label-primary">No aplica</span>';
-                                                                                                                                        break;
+                                                                                                                                            echo'<span class="label label-warning">En Proceso</span>';
+                                                                                                                                            break;
+                                                                                                                                        case 3 :
+                                                                                                                                            echo'<span class="label label-primary">No aplica</span>';
+                                                                                                                                            break;
                                                                                                                                     }
-                                                                                                                                    ?>
+                                                                                   ?>
+                                                                                    <?php switch($row->nivelmadurez)
+                                                                                                                                    
+                                                                                    { 
+                                                                                        case 0 :
+                                                                                            echo '<span class="label label-info">0. Incompleto</span>';
+                                                                                            break;
+                                                                                        case 1 :
+                                                                                            echo '<span class="label label-info">1. Realizado</span>';
+                                                                                            break;
+                                                                                        case 2 :
+                                                                                            echo'<span class="label label-info">2. Gestionado</span>';
+                                                                                            break;
+                                                                                        case 3 :
+                                                                                            echo'<span class="label label-info">3. Establecido</span>';
+                                                                                            break;
+                                                                                         case 4 :
+                                                                                            echo'<span class="label label-info">4. Predecible</span>';
+                                                                                            break;
+                                                                                        case 5 :
+                                                                                            echo'<span class="label label-info">5. Optimizado</span>';
+                                                                                            break;
+                                                                                    }
+                                                                                    ?>
                                                                                 </label>
                                                                     
                                                                                 <a href="" style="text-align: right;font-style: italic; font-weight: bold;font-size: 0.70em;"  data-toggle="modal" data-target="#modal-info{{$row->idarticulo}}">
-                                                                                        ({{$row->evidencias}}) Evidencia de Cumplimiento(s) articulo  
+                                                                                        ({{$row->evidencias}}) Evidencia(s) de Cumplimiento  
                                                                                 </a>
                                                                                        
                                                                                      
@@ -282,7 +330,9 @@
                                                                         <!--fin Encabezado articulo-->
 
                                                                         <!--List box Estado de cumplimiento-->
+                                                                        
                                                                         <div class="panel box">
+                                                                                
                                                                         <table style="border-collapse:collapse;">
                                                                             <thead>
                                                                                 <th style="width:20%; " > </th>
@@ -309,6 +359,9 @@
                                                                                                                                      case 2 :
                                                                                                                                          echo '2';
                                                                                                                                          break;
+                                                                                                                                    case 3 :
+                                                                                                                                         echo '3';
+                                                                                                                                         break;
                                                                                                                                      }
                                                                                                                                  ?>      
                                                                                                                                  ">
@@ -320,24 +373,66 @@
                                                                                                          value="1"> Cumple
                                                                                                      </option>
                                                                                                      <option @if ($row->estadocumplimiento==2) Selected @endif
-                                                                                                         value="2"> No aplica
+                                                                                                         value="2"> En Proceso
                                                                                                      </option>
+                                                                                                     <option @if ($row->estadocumplimiento==3) Selected @endif
+                                                                                                            value="3"> No Aplica
+                                                                                                    </option>
                                                                                                  </select>
-                                                                                              
-                                                                                                 <label style="font-style: bold; font-size:0.875em;">Fecha Cumplimiento</label>
-                                                                                                     <input name="fechacumplimiento" type="date" class="form-control select2 input-sm" style="width: 100%;"
-                                                                                                         value="{{$row->fechacumplimiento}}">
-                                                                                                         <br>
+
+                                                                                                 <label style="font-style: bold; font-size:0.875em;">Nivel Madurez Cobit 5</label>
+                                                                                                 <select name="nivelmadurez" class="form-control select2 input-sm" style="width: 100%;" value=" 
+                                                                                                        <?php switch($row->nivelmadurez)
+                                                                                                        { 
+                                                                                                            case 0 :
+                                                                                                                echo '0';
+                                                                                                                break;
+                                                                                                            case 1 :
+                                                                                                                echo '1';
+                                                                                                                break;
+                                                                                                            case 2 :
+                                                                                                                echo '2';
+                                                                                                                break;
+                                                                                                            }
+                                                                                                        ?>      
+                                                                                                        ">
+                                                 
+                                                                                                <option @if ($row->nivelmadurez==0) Selected @endif
+                                                                                                    value="0">0. Incompleto
+                                                                                                </option>
+                                                                                                <option @if ($row->nivelmadurez==1) Selected @endif
+                                                                                                    value="1">1. Realizado
+                                                                                                </option>
+                                                                                                <option @if ($row->nivelmadurez==2) Selected @endif
+                                                                                                    value="2">2. Gestionado
+                                                                                                </option>
+                                                                                                <option @if ($row->nivelmadurez==3) Selected @endif
+                                                                                                    value="3">3. Establecido
+                                                                                                </option>
+                                                                                                <option @if ($row->nivelmadurez==4) Selected @endif
+                                                                                                    value="4">4. Predecible
+                                                                                                </option>
+                                                                                                <option @if ($row->nivelmadurez==5) Selected @endif
+                                                                                                    value="5">5. Optimizado
+                                                                                                </option>
+                                                                                            </select>
+                                                                                                <br>
+                                                                                                <label style="font-style: bold; font-size:0.875em;">Fecha Cumplimiento</label>
+                                                                                                <input name="fechacumplimiento" type="date" class="form-control select2 input-sm" style="width: 100%;"
+                                                                                                    value="{{$row->fechacumplimiento}}">
+                                                                                                  
+                                                                                          
                                                                                                         
                                                                                                  </td>
                                                                                                  
                                                                                                  <td style="padding:.75em .5em;">
+                                                                                                  
                                                                                                         <label style="font-style: bold; font-size:0.875em;">Observaciones</label>
 
                                                                                                         <button class="btn btn-warning btn-xs"  style="float: right;" type="submit">Guardar Cambios</button> 
                                                                                                         
                                                                                                      <textarea name="observacionescumplimiento" type="text" class="textarea"  value="{{$row->observacionescumplimiento}}"
-                                                                                                             style="width: 100%; height: 87px; font-size: 11px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$row->observacionescumplimiento}}</textarea>
+                                                                                                             style="width: 100%; height: 133px; font-size: 11px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$row->observacionescumplimiento}}</textarea>
                                                                                                              <br>
                                                                                                             
                                                                                                  </td>
