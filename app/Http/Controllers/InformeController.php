@@ -34,9 +34,7 @@ class InformeController extends Controller
     {
         try {
 
-           /* $emp=$request->get('emp');
-            $regu=$request->get('regu');
-            */
+        
             DB::beginTransaction();
 
             $ValoresCumplimiento =Db::statement('INSERT INTO cumplimiento_articulo (idregulacionempresa,idarticulo,observacionescumplimiento,fechacumplimiento,estadocumplimiento,nivelmadurez) 
@@ -70,9 +68,80 @@ class InformeController extends Controller
             INNER JOIN regulacion_empresa re ON re.idregulacionempresa=a.idregulacionempresa 
             WHERE re.idempresa=? AND re.idregulacion=? ', [$emp,$regu]);
 
+
+        $ArticulosNivel =Db::select("select a.nivelmadurez,a.NombreNivel, isnull(CantidadArticulos,0) CantidadArticulos  from 
+        (
+        select 0 nivelmadurez, '0 - Incompleto' NombreNivel union  
+        select 1 nivelmadurez, '1 - Realizado'  union
+        select 2 nivelmadurez, '2 - Gestionado'  union
+        select 3 nivelmadurez, '3 - Establecido'  union
+        select 4 nivelmadurez, '4 - Predecible'  union
+        select 5 nivelmadurez, '5 - Optimizado'  
+        ) a left join 
+        (
+       select d.nivelmadurez NivelMadurez,count(d.idcumplimientoempresa)  CantidadArticulos from regulacion_empresa  a
+        inner join regulacion_articulo  b on b.idregulacion=a.idregulacion
+        left JOIN cumplimiento_articulo d on d.idregulacionempresa=a.idregulacionempresa  and d.idarticulo=b.idarticulo
+       where a.idempresa=? and a.idregulacion=?
+       group by d.nivelmadurez
+       ) b 
+       on a.nivelmadurez=b.NivelMadurez 
+       order by nivelmadurez ", [$emp,$regu]);
+
+       $ArticulosEstadoCumplimiento =Db::select("select a.EstadoCumplimiento,a.DescripcionEstadoCumplimiento, isnull(CantidadArticulos,0) CantidadArticulos  from 
+       (
+       select 0 EstadoCumplimiento, 'No Cumple' DescripcionEstadoCumplimiento union  
+       select 1 EstadoCumplimiento, 'Cumple'  union
+       select 2 EstadoCumplimiento, 'En Proceso'  union
+       select 3 EstadoCumplimiento, 'No Aplica'   
+       ) a left join 
+       (
+      select isnull(d.estadocumplimiento,0) EstadoCumplimiento,count(d.idcumplimientoempresa)  CantidadArticulos from regulacion_empresa  a
+       inner join regulacion_articulo  b on b.idregulacion=a.idregulacion
+       left JOIN cumplimiento_articulo d on d.idregulacionempresa=a.idregulacionempresa  and d.idarticulo=b.idarticulo
+      where a.idempresa=? and a.idregulacion=?
+      group by isnull(d.estadocumplimiento,0)
+      ) b  on a.EstadoCumplimiento=b.EstadoCumplimiento ", [$emp,$regu]);
+
+
+      $PromedioNMadurez =Db::select("select   ISNULL(avg(d.nivelmadurez),0) NivelMadurez from regulacion_empresa  a
+      inner join regulacion_articulo  b on b.idregulacion=a.idregulacion
+      left JOIN cumplimiento_articulo d on d.idregulacionempresa=a.idregulacionempresa  and d.idarticulo=b.idarticulo
+     where a.idempresa=? and a.idregulacion=? ", [$emp,$regu]);
+
+     $CantidadArticulos =Db::select("select  idregulacion, COUNT(idarticulo)  CantidadArticulos from 
+     regulacion_articulo  a   where a.idregulacion=? group by idregulacion
+     ", [$regu]);
+
+     
+     $ArticulosVigentes =Db::select("select a.estadoarticulo,a.DescripcionEstado, isnull(CantidadArticulos,0) CantidadArticulos  from 
+     (
+     select 0 estadoarticulo, 'Inactivos' DescripcionEstado union  
+     select 1 estadoarticulo, 'Vigentes'  
+    
+     ) a left join 
+     (
+    select idregulacion, estadoarticulo, count(idarticulo) CantidadArticulos  from 
+     regulacion_articulo  a   where a.idregulacion=2 
+     GROUP by idregulacion,estadoarticulo) b on a.estadoarticulo=b.estadoarticulo
+     ", [$regu]);
+
         DB::commit();
 
-            return view('Informe.informe')->with(['Cumplimiento'=> $Cumplimiento,'Regulacion'=>$Regulacion,'Empresa'=>$Empresa,'Evidencias'=>$Evidencias]);
+            return view('Informe.informe')->with(
+                [
+                'Cumplimiento'=> $Cumplimiento,
+                'Regulacion'=>$Regulacion,
+                'Empresa'=>$Empresa,
+                'Evidencias'=>$Evidencias,
+                'ArticulosNivel'=>$ArticulosNivel,
+                'ArticulosEstadoCumplimiento'=>$ArticulosEstadoCumplimiento,
+                'PromedioNMadurez'=>$PromedioNMadurez,
+                'CantidadArticulos'=>$CantidadArticulos,
+                'ArticulosVigentes'=>$ArticulosVigentes
+                ]);
+
+        
         } catch (\Illuminate\Database\QueryException $e) {
             DB::rollBack();
             dd($e);

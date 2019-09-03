@@ -36,9 +36,7 @@
   <link rel="stylesheet" href="{{asset("assets/lte/dist/css/skins/_all-skins.min.css")}}">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
- 
-
-</head>
+ </head>
   <body class="hold-transition skin-blue fixed sidebar-mini">
     <div class="wrapper">
 
@@ -83,5 +81,16 @@
     <!-- iCheck 1.0.1 -->
     <script src="{{asset("assets/lte/plugins/iCheck/icheck.min.js")}}"></script>
 
+  <!---Flot Grafica-->
+    <script src="{{asset("assets/lte/bower_components/Flot/jquery.flot.js")}}"></script>
+    <script src="{{asset("assets/lte/bower_components/Flot/jquery.flot.resize.js")}}"></script>
+    <script src="{{asset("assets/lte/bower_components/Flot/jquery.flot.categories.js")}}"></script>
+  <!---Flot Grafica-->
+
+   <!---Chart Js-->
+  <script src="{{asset("assets/lte/bower_components/chart.js/Chart.js")}}"></script>
+  <!---Chart Js-->
+
+  
       </body>
 </html>

@@ -6,7 +6,7 @@
 
 @section('titulo')
 <section class="content-header">
-    <h1> Informe de Cumplimiento
+    <h1>  Informe de Cumplimiento
         <small>Seguimiento </small>
     </h1>
     <ol class="breadcrumb">
@@ -67,7 +67,7 @@
             </div>
             @enderror
 
-            <!-- Tabla de sanciones -->
+            <!-- Tabla de Parametros -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
@@ -92,15 +92,174 @@
                     </div>
                 </div>
             </div>
-            <!-- Tabla de Asignacion de sanciones -->
+            <!-- Tabla de Parametros -->
 
             <!-- Tabla de Cumplimiento-->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Informe de Cumplimiento</h3>
+                            <h3 class="box-title"><label class="select2 input-lm"> Informe de Cumplimiento </label></h3>
                         </div>
+            <br>
+
+                        <!--<sup style="font-size: 20px">%</sup>-->
+            <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-aqua">
+                      <div class="inner">
+                        <h3>
+                            <?php 
+                                    foreach ($PromedioNMadurez as $An ) 
+                                    { 
+                                        switch ($An->NivelMadurez)
+                                        {
+                                            case 0:
+                                            echo ('0-Incompleto');
+                                            break; 
+                                            case 1:
+                                            echo ('1-Realizado');
+                                            break; 
+                                            case 2:
+                                            echo ('2-Gestionado');
+                                            break; 
+                                            case 3:
+                                            echo ('3-Establecido');
+                                            break; 
+                                            case 4:
+                                            echo ('4-Predecible');
+                                            break; 
+                                            case 5:
+                                            echo ('5-Optimizado');
+                                            break; 
+                                        }
+                                        break;
+                                    
+                                    }?> 
+                        
+                        </h3>
+          
+                        <p>Nivel de Madurez Cobit 5 (General)</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                      </div>
+                  
+                    </div>
+                  </div>
+
+            <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-orange">
+                      <div class="inner">
+                        <h3><?php 
+                            foreach ($CantidadArticulos as $CA ) 
+                            { 
+                                    echo ($CA->CantidadArticulos);
+                                    break; 
+                               
+                            }?> </h3>
+          
+                        <p>Cantidad de Artículos</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion-ios-bookmarks"></i>
+                      </div>
+                      
+                    </div>
+                  </div>
+
+          
+             <!-- ./col -->
+                    <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-teal">
+                        <div class="inner">
+                        <h3><?php 
+                            foreach ($ArticulosVigentes as $AV ) 
+                            { 
+                                if($AV->estadoarticulo==1){ 
+                                    echo ($AV->CantidadArticulos);
+                                    break; 
+                                }
+                               
+                            }?> </h3>
+
+                        <p>Articulos Vigentes</p>
+                        </div>
+                        <div class="icon">
+                        <i class="ion-ios-calendar"></i>
+                        </div>
+                        
+                    </div>
+                    </div>
+
+                      <!-- ./col -->
+                      <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-gray">
+                                <div class="inner">
+                                <h3><?php 
+                                    foreach ($ArticulosVigentes as $AV ) 
+                                    { 
+                                        if($AV->estadoarticulo==0){ 
+                                            echo ($AV->CantidadArticulos);
+                                            break; 
+                                        }
+                                       
+                                    }?> </h3>
+        
+                                <p>Articulos Inactivos</p>
+                                </div>
+                                <div class="icon">
+                                <i class="ion-arrow-down-b"></i>
+                                </div>
+                                
+                            </div>
+                            </div>
+
+          <div class="col-md-6">
+                <!-- Bar chart -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                    <i class="fa fa-bar-chart-o"></i>
+
+                    <h3 class="box-title">Cantidad de Artículos por Nivel de Madurez Cobit 5</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                    </div>
+                    <div class="box-body">
+                    <div id="bar-chart" style="height: 300px;"></div>
+                    </div>
+                    <!-- /.box-body-->
+                </div>
+                <!-- /.box -->
+            </div>
+
+                <div class="col-md-6">
+                    <!-- DONUT CHART -->
+                    <div class="box box-danger">
+                            <div class="box-header with-border">
+                            <h3 class="box-title">Cantidad de Artículos por Estado de Cumplimiento</h3>
+                
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                            </div>
+                            <div class="box-body">
+                            <canvas id="pieChart" style="height:250px"></canvas>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+            </div>
+
                         <div class="box-body">
                             <table id="cumplimiento" name="cumplimiento" class="table table-bordered">
                                 <thead>
@@ -510,8 +669,6 @@ headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
-
-
       
 function AgregaEv(cumplimiento)
 {
@@ -550,6 +707,111 @@ $.ajax({
         
         })
 }
+
+///graficas//////
+
+$(function () {
+    
+    
+    /*
+     * BAR CHART
+     * ---------
+     */
+
+    var bar_data = {
+      data : [
+          ['0 - Incompleto', <?php foreach ($ArticulosNivel as $An ) { if ($An->nivelmadurez==0) {echo ($An->CantidadArticulos); break;}}?> ], 
+          ['1 - Realizado', <?php foreach ($ArticulosNivel as $An ) { if ($An->nivelmadurez==1) {echo ($An->CantidadArticulos); break;}}?> ], 
+          ['2 - Gestionado', <?php foreach ($ArticulosNivel as $An ) { if ($An->nivelmadurez==2) {echo ($An->CantidadArticulos); break;}}?> ], 
+          ['3 - Establecido', <?php foreach ($ArticulosNivel as $An ) { if ($An->nivelmadurez==3) {echo ($An->CantidadArticulos); break;}}?> ], 
+          ['4 - Predecible', <?php foreach ($ArticulosNivel as $An ) { if ($An->nivelmadurez==4) {echo ($An->CantidadArticulos); break;}}?> ], 
+          ['5 - Optimizado', <?php foreach ($ArticulosNivel as $An ) { if ($An->nivelmadurez==5) {echo ($An->CantidadArticulos); break;}}?> ]
+          
+          ],
+      color: '#2E9AFE'
+    }
+    $.plot('#bar-chart', [bar_data], {
+      grid  : {
+        borderWidth: 1,
+        borderColor: '#f3f3f3',
+        tickColor  : '#f3f3f3'
+      },
+      series: {
+        bars: {
+          show    : true,
+          barWidth: 0.5,
+          align   : 'center'
+        }
+      },
+      xaxis : {
+        mode      : 'categories',
+        tickLength: 0
+      }
+    })
+    /* END BAR CHART */
+
+   
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieChart       = new Chart(pieChartCanvas)
+    var PieData        = [
+      {
+        value    : <?php foreach ($ArticulosEstadoCumplimiento as $An ) { if ($An->EstadoCumplimiento==0) {echo ($An->CantidadArticulos); break;}}?>,
+        color    : '#FE2E2E',
+        highlight: '#FE2E2E',
+        label    : '<?php foreach ($ArticulosEstadoCumplimiento as $An ) { if ($An->EstadoCumplimiento==0) {echo ($An->DescripcionEstadoCumplimiento); break;}}?>'
+      },
+      {
+        value    : <?php foreach ($ArticulosEstadoCumplimiento as $An ) { if ($An->EstadoCumplimiento==1) {echo ($An->CantidadArticulos); break;}}?>,
+        color    : '#00a65a',
+        highlight: '#00a65a',
+        label    : '<?php foreach ($ArticulosEstadoCumplimiento as $An ) { if ($An->EstadoCumplimiento==1) {echo ($An->DescripcionEstadoCumplimiento); break;}}?>'
+      },
+      {
+        value    : <?php foreach ($ArticulosEstadoCumplimiento as $An ) { if ($An->EstadoCumplimiento==2) {echo ($An->CantidadArticulos); break;}}?>,
+        color    : '#f39c12',
+        highlight: '#f39c12',
+        label    : '<?php foreach ($ArticulosEstadoCumplimiento as $An ) { if ($An->EstadoCumplimiento==2) {echo ($An->DescripcionEstadoCumplimiento); break;}}?>'
+      },
+      {
+        value    : <?php foreach ($ArticulosEstadoCumplimiento as $An ) { if ($An->EstadoCumplimiento==3) {echo ($An->CantidadArticulos); break;}}?>,
+        color    : '#BDBDBD',
+        highlight: '#BDBDBD',
+        label    : '<?php foreach ($ArticulosEstadoCumplimiento as $An ) { if ($An->EstadoCumplimiento==3) {echo ($An->DescripcionEstadoCumplimiento); break;}}?>'
+      }
+    ]
+    var pieOptions     = {
+      //Boolean - Whether we should show a stroke on each segment
+      segmentShowStroke    : true,
+      //String - The colour of each segment stroke
+      segmentStrokeColor   : '#fff',
+      //Number - The width of each segment stroke
+      segmentStrokeWidth   : 2,
+      //Number - The percentage of the chart that we cut out of the middle
+      percentageInnerCutout: 50, // This is 0 for Pie charts
+      //Number - Amount of animation steps
+      animationSteps       : 100,
+      //String - Animation easing effect
+      animationEasing      : 'easeOutBounce',
+      //Boolean - Whether we animate the rotation of the Doughnut
+      animateRotate        : true,
+      //Boolean - Whether we animate scaling the Doughnut from the centre
+      animateScale         : true,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive           : true,
+      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio  : true,
+      //String - A legend template
+      legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    pieChart.Doughnut(PieData, pieOptions)
+
+  })
         </script>
 
 @endsection
