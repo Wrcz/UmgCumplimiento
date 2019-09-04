@@ -12,25 +12,27 @@
 */
 
 
+//Proteccion de rubas
+Auth::routes();
+Auth::routes(['register' => false]);
+
+
+Route::group(['middleware' => 'lang:es'], function () {
+    Route::get('login', 'LoginController@login');
+});
+
+
+//Ruta de Home
 Route::get('/bienvenido/', 'PageControler@inicio')->name('bienvenido');
 Route::get('/', 'PageControler@inicio')->name('bienvenido');
-
-/*
-Route::get('/', function () {
-    return view('bienvenido');
-})->name('bienvenido');
-*/
 
 //usuarios
 // Authentication Routes...
 route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 route::post('login', 'Auth\LoginController@login');
 route::get('logout', 'Auth\LoginController@logout')->name('logout');
-/*
-Route::group(['middleware' => 'lang:es'], function () {
-    Route::get('login', 'LoginController@login');
-});
-*/
+
+
 
 //Rutas para Empresas
 Route::get('/empresas', 'EmpresasController@empresas')->name('Empresas.empresas');
@@ -111,8 +113,6 @@ Route::get('/seguimiento/', 'InformeController@informeparametros')->name('Inform
 
 Route::get('/seguimiento/regulacion/{id}/{regu}', 'InformeController@informeregulacion')->name('Informe.informe');
 
-//Auth::routes();
 
-//Auth::routes(['register' => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');

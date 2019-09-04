@@ -366,7 +366,7 @@
                                                                                                 <td>{{$Evidencia->fechacargada}}</td>
                                                                                            
                                                                                                 <td>
-                                                                                                    <a href="{{url('/evidencias/'.$Evidencia->documentoevidencia)}}" target="_blank">Ver</a>
+                                                                                                    <a href="{{url('evidencias/'.$Evidencia->documentoevidencia)}}" target="_blank">Ver</a>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         @endif
