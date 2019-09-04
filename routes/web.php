@@ -17,8 +17,8 @@
 
 //usuarios
 // Authentication Routes...
+route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-//route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 route::post('login', 'Auth\LoginController@login');
 route::get('logout', 'Auth\LoginController@logout')->name('logout');
 

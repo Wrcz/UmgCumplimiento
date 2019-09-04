@@ -18,7 +18,7 @@ class InformeController extends Controller
     public function informeparametros()
     {
         try {
-            $Empresas =Db::select('SELECT e.idempresa,e.nombreempresa FROM empresas e INNER JOIN usuarios_empresas ue ON e.idempresa=ue.idempresa WHERE ue.idusuario=? order by e.idempresa', [1]);
+            $Empresas =Db::select('SELECT e.idempresa,e.nombreempresa FROM empresas e INNER JOIN usuarios_empresas ue ON e.idempresa=ue.idempresa WHERE ue.idusuario=? order by e.idempresa', [auth()->user()->idusuario]);
  
             return view('Informe.parametroinforme')->with('Empresas', $Empresas);
         } catch (\Illuminate\Database\QueryException $e) {
@@ -58,8 +58,9 @@ class InformeController extends Controller
         (SELECT idcumplimientoempresa, COUNT(*) evidencias  FROM cumplimiento_evidencia GROUP BY idcumplimientoempresa ) ce ON ce.idcumplimientoempresa=ca.idcumplimientoempresa  LEFT JOIN
 		regulacion_sancion rs1 ON rs1.idarticulo=ra.idarticulo AND rs1.estadosancion=1 LEFT JOIN
         (SELECT rs.idarticulo, COUNT(*) Sanciones  FROM regulacion_sancion rs GROUP BY rs.idarticulo ) cec ON cec.idarticulo =ra.idarticulo
-          WHERE re.idempresa=? AND r.idregulacion=?
-        ORDER BY rs.noseccion,ra.ordenarticulo,ra.numeroarticulo', [$emp,$regu]);
+        INNER JOIN usuarios_empresas z on z.idempresa=re.idempresa
+          WHERE re.idempresa=? AND r.idregulacion=? and z.idusuario=?
+        ORDER BY rs.noseccion,ra.ordenarticulo,ra.numeroarticulo', [$emp,$regu,auth()->user()->idusuario]);
 
 
             $Regulacion =App\regulacion::findOrFail($regu);

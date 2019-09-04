@@ -91,7 +91,10 @@ class EmpresasController extends Controller
     {
         try {
             $Empresa = App\empresas::findOrFail($id);
-            $Regulaciones = DB::select('SELECT r.idregulacion,r.identificacion,r.nombreregulacion,r.pais,r.estadoregulacion,isnull(re.estadoregulacionempresa,0)  asignada,ISNULL(re.idregulacionempresa,0)  idregulacionempresa FROM regulacion r left JOIN regulacion_empresa re ON r.idregulacion=re.idregulacion AND re.idempresa=?', [$id]);
+            $Regulaciones = DB::select(" 
+            SELECT r.idregulacion,r.identificacion,r.nombreregulacion,r.pais,r.estadoregulacion,isnull(re.estadoregulacionempresa,0)  asignada,
+            ISNULL(re.idregulacionempresa,0)  idregulacionempresa FROM regulacion r left JOIN regulacion_empresa re ON r.idregulacion=re.idregulacion 
+            AND re.idempresa=? inner join usuarios_empresas ue on ue.idempresa=re.idempresa where ue.idusuario=?", [$id,auth()->user()->idusuario]);
         
           
             return view('Empresas.consultar', compact('Empresa'), compact('Regulaciones'));
