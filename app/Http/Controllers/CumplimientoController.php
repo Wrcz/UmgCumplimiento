@@ -34,7 +34,7 @@ class CumplimientoController extends Controller
             $select = $request->get('select');
             $value = $request->get('value');
             $dependent = $request->get('dependent');
-            $data = DB::select('SELECT r.idregulacion,r.identificacion + char(32) +r.nombreregulacion nombreregulacion FROM regulacion_empresa re INNER JOIN regulacion r ON re.idregulacion=r.idregulacion WHERE re.idempresa=?', [$value]);
+            $data = DB::select('SELECT r.idregulacion,r.identificacion + char(32) +r.nombreregulacion nombreregulacion FROM regulacion_empresa re INNER JOIN regulacion r ON re.idregulacion=r.idregulacion WHERE re.idempresa=? and re.estadoregulacionempresa=1', [$value]);
        
             $output = '<option value="">Seleccione Regulacion</option>';
             
