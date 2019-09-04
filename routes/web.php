@@ -11,27 +11,20 @@
 |
 */
 
-
-//Proteccion de rubas
-Auth::routes();
-Auth::routes(['register' => false]);
+//Route::get('/', 'PageControler@inicio')->name('bienvenido');
 
 
-Route::group(['middleware' => 'lang:es'], function () {
-    Route::get('login', 'LoginController@login');
-});
+
+//usuarios
+// Authentication Routes...
+route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+route::post('login', 'Auth\LoginController@login');
+route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 
 //Ruta de Home
 Route::get('/bienvenido/', 'PageControler@inicio')->name('bienvenido');
-Route::get('/', 'PageControler@inicio')->name('bienvenido');
-
-//usuarios
-// Authentication Routes...
-route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-route::post('login', 'Auth\LoginController@login');
-route::get('logout', 'Auth\LoginController@logout')->name('logout');
-
 
 
 //Rutas para Empresas

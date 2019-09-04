@@ -10,6 +10,12 @@ class CumplimientoController extends Controller
 {
     //
 
+    public function __construct(){
+
+        $this->middleware('auth');
+      }
+
+      
     //Metodo para obtener empresaas
     public function cumplimiento()
     {

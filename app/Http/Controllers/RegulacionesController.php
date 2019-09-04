@@ -8,6 +8,12 @@ use App;
 
 class RegulacionesController extends Controller
 {
+    public function __construct(){
+
+        $this->middleware('auth');
+      }
+
+      
     //Metodo de inicio
     public function inicio()
     {

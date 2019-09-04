@@ -10,6 +10,11 @@ class PageControler extends Controller
       return view('bienvenido');
     }
 
+    public function __construct(){
+
+      $this->middleware('auth');
+    }
+
     public function Prueba(){
       $Alumnos = App\Usuario::paginate(3);
       //$Alumnos = ['william','Michael','Jose'];

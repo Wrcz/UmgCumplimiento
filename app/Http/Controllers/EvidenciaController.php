@@ -12,6 +12,12 @@ use Carbon\Carbon;
 
 class EvidenciaController extends Controller
 {
+    public function __construct(){
+
+        $this->middleware('auth');
+      }
+
+      
   //Metodo para Eliminar empresas
   public function eliminar($idevidencia)
   {
