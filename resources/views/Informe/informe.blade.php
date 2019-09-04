@@ -150,17 +150,28 @@
 
             <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
-                    <div class="small-box bg-orange">
+                    <div class="small-box bg-green">
                       <div class="inner">
                         <h3><?php 
+                        $CantidadAr=0;
                             foreach ($CantidadArticulos as $CA ) 
                             { 
-                                    echo ($CA->CantidadArticulos);
+                                   $Cantidad=$CA->CantidadArticulos;
                                     break; 
                                
-                            }?> </h3>
+                            }
+                            
+                            foreach ($CantidadCumplen as $CC ) 
+                            { 
+                              
+                                  echo (  round(  ($CC->CantidadArticulos / $Cantidad) *100,0) . "%" );
+                                    break; 
+                               
+                            }
+                            
+                            ?> </h3>
           
-                        <p>Cantidad de Artículos</p>
+                        <p>De los Artículos que aplican se Cumplen</p>
                       </div>
                       <div class="icon">
                         <i class="ion-ios-bookmarks"></i>
@@ -176,12 +187,19 @@
                     <div class="small-box bg-teal">
                         <div class="inner">
                         <h3><?php 
+                            
                             foreach ($ArticulosVigentes as $AV ) 
                             { 
                                 if($AV->estadoarticulo==1){ 
-                                    echo ($AV->CantidadArticulos);
+                                    echo ($AV->CantidadArticulos. "/");
                                     break; 
                                 }
+                               
+                            }
+                            foreach ($CantidadArticulos as $CA ) 
+                            { 
+                                    echo ($CA->CantidadArticulos );
+                                    break; 
                                
                             }?> </h3>
 
@@ -200,14 +218,22 @@
                             <div class="small-box bg-gray">
                                 <div class="inner">
                                 <h3><?php 
+                                    
                                     foreach ($ArticulosVigentes as $AV ) 
                                     { 
                                         if($AV->estadoarticulo==0){ 
-                                            echo ($AV->CantidadArticulos);
+                                            echo ($AV->CantidadArticulos. "/");
                                             break; 
                                         }
                                        
-                                    }?> </h3>
+                                    }
+                                    foreach ($CantidadArticulos as $CA ) 
+                                     { 
+                                    echo ($CA->CantidadArticulos );
+                                    break; 
+                               
+                                     }
+                                     ?> </h3>
         
                                 <p>Articulos Inactivos</p>
                                 </div>

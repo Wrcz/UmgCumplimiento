@@ -115,6 +115,12 @@ class InformeController extends Controller
      ", [$regu]);
 
      
+     $CantidadCumplen =Db::select("select  idregulacion, COUNT(idarticulo)  CantidadArticulos from 
+     cumplimiento_articulo  a    right JOIN regulacion_empresa re ON a.idregulacionempresa = re.idregulacionempresa 
+    AND a.estadocumplimiento=1  where re.idempresa=? and re.idregulacion=?    group by idregulacion
+     ",[$emp,$regu]);
+
+
      $ArticulosVigentes =Db::select("select a.estadoarticulo,a.DescripcionEstado, isnull(CantidadArticulos,0) CantidadArticulos  from 
      (
      select 0 estadoarticulo, 'Inactivos' DescripcionEstado union  
@@ -139,7 +145,8 @@ class InformeController extends Controller
                 'ArticulosEstadoCumplimiento'=>$ArticulosEstadoCumplimiento,
                 'PromedioNMadurez'=>$PromedioNMadurez,
                 'CantidadArticulos'=>$CantidadArticulos,
-                'ArticulosVigentes'=>$ArticulosVigentes
+                'ArticulosVigentes'=>$ArticulosVigentes,
+                'CantidadCumplen'=>$CantidadCumplen
                 ]);
 
         
