@@ -112,7 +112,3 @@ Route::post('/cumplimiento/actualizar/{id}/{reg}/{art}', 'CumplimientoController
 Route::get('/seguimiento/', 'InformeController@informeparametros')->name('Informe.parametroinforme');
 
 Route::get('/seguimiento/regulacion/{id}/{regu}', 'InformeController@informeregulacion')->name('Informe.informe');
-
-
-
-//Route::get('/home', 'HomeController@index')->name('home');
