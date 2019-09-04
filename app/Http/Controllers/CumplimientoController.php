@@ -71,10 +71,11 @@ class CumplimientoController extends Controller
         ISNULL(ca.estadocumplimiento,0) estadocumplimiento, ca.observacionescumplimiento,ca.fechacumplimiento, ISNULL(ce.evidencias,0) evidencias,ISNULL(cec.Sanciones,0) sanciones,
 		rs1.idsancion,rs1.descripcionsancion,ca.idcumplimientoempresa,ca.nivelmadurez,
         ROW_NUMBER() OVER( PARTITION BY ra.idseccion,rs.noseccion ORDER BY rs.noseccion) filaseccion,
-        ROW_NUMBER() OVER( PARTITION BY ra.idarticulo ORDER BY ra.idarticulo) filaarticulo
+        ROW_NUMBER() OVER( PARTITION BY ra.idarticulo ORDER BY ra.idarticulo) filaarticulo,
+        ROW_NUMBER() OVER( PARTITION BY r.idregulacion ORDER BY r.idregulacion) filaregulacion
         FROM 
         regulacion r INNER JOIN 
-        regulacion_seccion rs ON r.idregulacion=rs.idregulacion INNER JOIN 
+        regulacion_seccion rs ON r.idregulacion=rs.idregulacion left JOIN 
         regulacion_articulo ra ON ra.idregulacion=r.idregulacion AND ra.idseccion=rs.idseccion INNER JOIN 
         regulacion_empresa re ON re.idregulacion=r.idregulacion LEFT JOIN 
         cumplimiento_articulo ca ON ca.idarticulo=ra.idarticulo AND ca.idregulacionempresa=re.idregulacionempresa LEFT JOIN

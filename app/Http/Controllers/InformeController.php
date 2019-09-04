@@ -47,7 +47,8 @@ class InformeController extends Controller
         ISNULL(ca.estadocumplimiento,0) estadocumplimiento, ca.observacionescumplimiento,ca.fechacumplimiento, ISNULL(ce.evidencias,0) evidencias,ISNULL(cec.Sanciones,0) sanciones,
 		rs1.idsancion,rs1.descripcionsancion,ca.idcumplimientoempresa,ca.nivelmadurez,
         ROW_NUMBER() OVER( PARTITION BY ra.idseccion,rs.noseccion ORDER BY rs.noseccion) filaseccion,
-        ROW_NUMBER() OVER( PARTITION BY ra.idarticulo ORDER BY ra.idarticulo) filaarticulo
+        ROW_NUMBER() OVER( PARTITION BY ra.idarticulo ORDER BY ra.idarticulo) filaarticulo,
+        ROW_NUMBER() OVER( PARTITION BY r.idregulacion ORDER BY r.idregulacion) filaregulacion
         FROM 
         regulacion r INNER JOIN 
         regulacion_seccion rs ON r.idregulacion=rs.idregulacion INNER JOIN 
@@ -82,7 +83,7 @@ class InformeController extends Controller
        select d.nivelmadurez NivelMadurez,count(d.idcumplimientoempresa)  CantidadArticulos from regulacion_empresa  a
         inner join regulacion_articulo  b on b.idregulacion=a.idregulacion
         left JOIN cumplimiento_articulo d on d.idregulacionempresa=a.idregulacionempresa  and d.idarticulo=b.idarticulo
-       where a.idempresa=? and a.idregulacion=?
+       where a.idempresa=? and a.idregulacion=? and d.estadocumplimiento<>3
        group by d.nivelmadurez
        ) b 
        on a.nivelmadurez=b.NivelMadurez 
@@ -107,7 +108,7 @@ class InformeController extends Controller
       $PromedioNMadurez =Db::select("select   ISNULL(avg(d.nivelmadurez),0) NivelMadurez from regulacion_empresa  a
       inner join regulacion_articulo  b on b.idregulacion=a.idregulacion
       left JOIN cumplimiento_articulo d on d.idregulacionempresa=a.idregulacionempresa  and d.idarticulo=b.idarticulo
-     where a.idempresa=? and a.idregulacion=? ", [$emp,$regu]);
+     where a.idempresa=? and a.idregulacion=? and d.estadocumplimiento<>3", [$emp,$regu]);
 
      $CantidadArticulos =Db::select("select  idregulacion, COUNT(idarticulo)  CantidadArticulos from 
      regulacion_articulo  a   where a.idregulacion=? group by idregulacion
@@ -122,7 +123,7 @@ class InformeController extends Controller
      ) a left join 
      (
     select idregulacion, estadoarticulo, count(idarticulo) CantidadArticulos  from 
-     regulacion_articulo  a   where a.idregulacion=2 
+     regulacion_articulo  a   where a.idregulacion=?
      GROUP by idregulacion,estadoarticulo) b on a.estadoarticulo=b.estadoarticulo
      ", [$regu]);
 

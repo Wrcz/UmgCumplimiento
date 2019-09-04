@@ -139,7 +139,7 @@
                         
                         </h3>
           
-                        <p>Nivel de Madurez Cobit 5 (General)</p>
+                        <p>Nivel de Madurez Cobit (General)</p>
                       </div>
                       <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -224,7 +224,7 @@
                     <div class="box-header with-border">
                     <i class="fa fa-bar-chart-o"></i>
 
-                    <h3 class="box-title">Cantidad de Artículos por Nivel de Madurez Cobit 5</h3>
+                    <h3 class="box-title">Cantidad de Artículos por Nivel de Madurez Cobit </h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -272,7 +272,7 @@
 
                                     @foreach ($Cumplimiento as $row)
 
-                                    @if ($row->filaseccion==1  && $row->filaarticulo==1)
+                                    @if ($row->filaseccion==1  && $row->filaarticulo==1 && $row->filaregulacion==1)
                                     <tr>
                                             <td style="text-align: center; " >
                                                 <h3 style=" font-weight: bold;" >{{$Regulacion->pais}} </h3>
@@ -308,7 +308,7 @@
                                             <!-- titulo de Articulo -->
                                             @if ($row->filaarticulo==1 || ($row->estadocumplimiento==0 &&  $row->sanciones>0))
                                            
-                                                @if ($row->filaarticulo==1)
+                                                @if ($row->filaarticulo==1  && !is_null($row->idarticulo))
                                                 <tr> 
                                                    <td> 
                                                             <!-- /.modal -->
@@ -501,7 +501,7 @@
                                                                                                     </option>
                                                                                                  </select>
 
-                                                                                                 <label style="font-style: bold; font-size:0.875em;">Nivel Madurez Cobit 5</label>
+                                                                                                 <label style="font-style: bold; font-size:0.875em;">Nivel Madurez Cobit </label>
                                                                                                  <select name="nivelmadurez" class="form-control select2 input-sm" style="width: 100%;" disabled value=" 
                                                                                                         <?php switch($row->nivelmadurez)
                                                                                                         { 

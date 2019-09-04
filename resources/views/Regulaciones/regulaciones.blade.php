@@ -60,6 +60,7 @@
                                         <th>Fecha Fin vigencia</th>
                                         <th>Estado</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,15 +82,18 @@
 
                                         </td>
                                         <td>
-                                            
-
+                                            <a href="{{route('Regulaciones.consultar',$Regulacion->idregulacion)}}"
+                                                class="btn btn-warning btn-xs">Editar</a>
+                                        </td>
+                                        <td>
                                             <form action="{{route('Regulaciones.eliminar',$Regulacion->idregulacion)}}"
-                                                method="POST" class="d-inline">
+                                                method="POST" class="inline">
                                                 @method('DELETE')
                                                 @csrf
-                                                <a href="{{route('Regulaciones.consultar',$Regulacion->idregulacion)}}"
-                                                        class="btn btn-warning btn-xs">Editar</a>
+                                             
+                                                
                                                 <button class="btn btn-danger btn-xs" type="submit">Eliminar</button>
+                                               
                                             </form>
                                         </td>
                                     </tr>
@@ -104,6 +108,7 @@
                                         <th>Fecha Ini. vigencia</th>
                                         <th>Fecha Fin vigencia</th>
                                         <th>Estado</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </tfoot>

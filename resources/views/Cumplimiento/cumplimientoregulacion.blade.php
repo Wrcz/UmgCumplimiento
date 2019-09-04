@@ -113,7 +113,7 @@
 
                                     @foreach ($Cumplimiento as $row)
 
-                                    @if ($row->filaseccion==1  && $row->filaarticulo==1)
+                                    @if ($row->filaseccion==1  && $row->filaarticulo==1 && $row->filaregulacion==1)
                                     <tr>
                                             <td style="text-align: center; " >
                                                 <h3 style=" font-weight: bold;" >{{$Regulacion->pais}} </h3>
@@ -149,7 +149,7 @@
                                             <!-- titulo de Articulo -->
                                             @if ($row->filaarticulo==1 || ($row->estadocumplimiento==0 &&  $row->sanciones>0))
                                            
-                                                @if ($row->filaarticulo==1)
+                                                @if ($row->filaarticulo==1 &&  !is_null($row->idarticulo) )
                                                 <tr> 
                                                    <td> 
                                                             <!-- /.modal -->
