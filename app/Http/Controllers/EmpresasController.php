@@ -23,7 +23,14 @@ class EmpresasController extends Controller
     public function empresas()
     {
         try {
-            $Empresas =App\empresas::all()->sortBy('nombreempresa');
+            $Empresas =DB::table('empresas')
+            ->join('usuarios_empresas','empresas.idempresa','=','usuarios_empresas.idempresa')
+            ->where('usuarios_empresas.idusuario','=',auth()->user()->idusuario)
+            ->select('empresas.*')
+            ->orderBy('nombreempresa')
+            ->get();
+
+         
 
             return view('Empresas.empresas', compact('Empresas'));
         } catch (\Illuminate\Database\QueryException $e) {
