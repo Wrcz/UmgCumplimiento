@@ -171,7 +171,7 @@
                             
                             ?> </h3>
           
-                        <p>De los Artículos que aplican se Cumplen</p>
+                        <p>De los Artículos que aplican a la org. Cumplen</p>
                       </div>
                       <div class="icon">
                         <i class="ion-ios-bookmarks"></i>
