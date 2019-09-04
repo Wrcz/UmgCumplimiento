@@ -13,13 +13,11 @@
 
 //Route::get('/', 'PageControler@inicio')->name('bienvenido');
 
-
-
 //usuarios
 // Authentication Routes...
-route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+route::get('/', 'Auth\LoginController@showLoginForm');
 route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-route::post('login', 'Auth\LoginController@login');
+route::post('login', 'Auth\LoginController@login')->name('login');
 route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 
